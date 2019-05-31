@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% block content %}
+<table class="config_table">
+  <thead class="table_head">
+    <tr>
+      <th>
+        <a href="/view/orgs/all/?sort=org.name">Org</a>
+        <a href="/add/org/new/">
+          <img src="/static/pictures/edit/add_circle.png" alt="Add Org" title="Add Org" class="edit_pic">
+        </a>
+      </th>
+      <th><a href="/view/orgs/all/?sort=org.descript">Description</a></th>
+      <th><a href="/view/orgs/all/?sort=org.customer">Customer</a></th>
+      <th><a href="/view/orgs/all/?sort=org.software">Software</a></th>
+      <th><a href="/view/orgs/all/?sort=org.hardware">Hardware</a></th>
+      <th><a href="/view/orgs/all/?sort=org.notes">Notes</a></th>
+    </tr>
+  </thead>
+  <tbody class="all_orgs">
+    {% for org in orgs %}
+      <tr>
+        <td>
+          <a href="/view/orgs/single/{{ org['id'] }}">{{ org["name"] }}</a>
+          <a href="/delete/org/{{ org['id'] }}" title="Delete Org #{{ org['id'] }}">
+            <img src="/static/pictures/edit/delete_circle.png" id="del_pic" class="edit_pic"
+              alt="Delete Org #{{ org['id'] }}">
+          </a>
+          <a href="/update/org/{{ org['id'] }}">
+            <img src="/static/pictures/edit/edit_pencil.png" alt="Edit Org" title="Edit Org" class="edit_pic">
+          </a>
+        </td>
+        {% if org["descript"] %}
+          <td>{{ org["descript"] }}</td>
+        {% else %}
+          <td>-</td>
+        {% endif %}
+        {% if org["customer"] %}
+          <td>Y</td>
+        {% else %}
+          <td>N</td>
+        {% endif %}
+        {% if org["software"] %}
+          <td>Y</td>
+        {% else %}
+          <td>N</td>
+        {% endif %}
+        {% if org["hardware"] %}
+          <td>Y</td>
+        {% else %}
+          <td>N</td>
+        {% endif %}
+        {% if org["notes"] %}
+          <td>{{ org["notes"] }}</td>
+        {% else %}
+          <td>-</td>
+        {% endif %}
+      </tr>
+    {% endfor %}
+  </tbody>
+  <tfoot class="table_footer">
+    <tr>
+      <td colspan="42">Showing {{ orgs_len }} of {{ orgs_len }} orgs.</td>
+    </tr>
+  </tfoot>
+</table>
+{% endblock %}

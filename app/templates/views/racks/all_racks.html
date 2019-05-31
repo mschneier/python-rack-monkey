@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% block content %}
+<table id="rack_table" class="all_list">
+  <thead class="table_head">
+    <tr>
+      <th>
+        <a href="/view/racks/all/?sort=rack.name">Rack</a>
+        <a href="/add/rack/new/">
+          <img src="/static/pictures/edit/add_circle.png" alt="Add Rack" title="Add Rack"
+            class="edit_pic">
+        </a>
+      </th>
+      <th><a href="/view/racks/all/?sort=device_count">Layout</a></th>
+      <th><a href="/view/racks/all/?sort=row.name">Row</a></th>
+      <th><a href="/view/racks/all/?sort=room.name">Room</a></th>
+      <th><a href="/view/racks/all/?sort=rack.size">Size (U)</a></th>
+      <th><a href="/view/racks/all/?sort=free_space">Free (U)</a></th>
+      <th><a href="/view/racks/all/?sort=rack.notes">Notes</a></th>
+      <th><input type="checkbox" checked="true" selected id="select_all" name="select_all"></th>
+    </tr>
+  </thead>
+  <tbody  class="all_racks">
+    {% for rack in racks %}
+      <tr>
+        <td>
+          <a href="/view/racks/one/normal/{{ rack[0] }}">{{ rack[1] }}</a>
+          <a href="/update/rack/{{ rack[0] }}">
+            <img src="/static/pictures/edit/edit_pencil.png" alt="Edit Rack" title="Edit Rack" class="edit_pic">
+          </a>
+        </td>
+        <td>{{ rack[17] }} Devices</td>
+        {% if not rack[11] or rack[11] == "-" %}
+          <td>N/A</td>
+        {% else %}
+          <td>{{ rack[11] }}</td>
+        {% endif %}
+        <td>{{ rack[14] }} in {{ rack [15] }}</td>
+        <td>{{ rack[5] }}</td>
+        <td>{{ rack[18] }}</td>
+        {% if rack[7] %}
+          <td title="{{ rack[7] }}">{{ rack[7][:22] }}...</td>
+        {% else %}
+          <td>-</td>
+        {% endif %}
+        <td>
+          <input type="checkbox" name="{{ rack[0] }}" value="{{ rack[0] }}">
+        </td>
+      </tr>
+    {% endfor %}
+  </tbody>
+  <tfoot class="table_footer">
+    <tr>
+      <td colspan="42">Showing {{ lenRacks }} of {{ lenRacks }} racks.</td>
+    </tr>
+  </tfoot>
+</table>
+<input disabled type="button" name="view_sel_racks" id="view_sel_racks" value="View Selected Racks">
+<br>
+<script src="/static/js/racks/select.js"></script>
+{% endblock %}

@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="report_links">
+  <a href="/view/reports/main/">Reports Index</a> | <a href="/view/reports/device_count/">Device Counts</a> | <a href="/view/reports/dups/">Duplicates</a>
+</div>
+<h2>Rack Reports</h2>
+<h3>Rack & Device Summary</h3>
+<ul>
+  <li>There are {{ racks }} <a href="/view/racks/all/">racks</a> with a total size of {{ rackSize }} U.</li>
+  <li>There are {{ devices }} total <a href="/view/devices/default/">devices</a>.</li>
+  <li>There are {{ unracked }} <a href="/view/devices/unracked/">unracked</a> devices.</li>
+  <li>There are {{ racked }} racked devices using a total of {{ rackedSize }} U.</li>
+  <li>There is {{ free }} U of free space in the racks.</li>
+</ul>
+<h3>Detailed Reports</h3>
+<ul>
+  <li><a href="/view/reports/device_count">Device Counts by Customer, Role, Hardware, and OS.</a></li>
+  <li><a href="/view/reports/dups/">Duplicate Serials, Assets, and OS License Keys.</a></li>
+</ul>
+{% endblock %}

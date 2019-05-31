@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% block content %}
+<table class="config_table">
+  <thead class="table_head">
+    <tr>
+      <th colspan="42">
+        Roles
+        <a href="/add/role/new/">
+          <img src="/static/pictures/edit/add_circle.png" alt="Add Role" title="Add Role" class="edit_pic">
+        </a>
+        <a href="/view/roles/all/">
+          <input type="button" value="View All">
+        </a>
+      </th>
+    </tr>
+  </thead>
+  {% if role %}
+  <tbody>
+    <tr>
+      <td>
+        <p class="key">Name</p>
+        {{ role["name"] }}&nbsp;&nbsp;&nbsp;<a href="/view/devices/default/?role={{ role ['id'] }}">Devices with this role.</a>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <p class="key">Description</p>
+        {{ role["descript"] }}
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <p class="key">Notes</p>
+        {% if role["notes"] %}
+          {{ role["notes"] }}
+        {% else %}
+          -
+        {% endif %}
+      </td>
+    </tr>
+  </tbody>
+  <tfoot class="table_footer">
+    <tr>
+      <td colspan="42">
+        <a href="/delete/role/{{ role['id'] }}">
+          <img src="/static/pictures/edit/delete_circle.png" id="del_pic" class="delete_pic"
+            alt="Delete Role #{{ role['id'] }}" title="Delete Role #{{ role['id'] }}">
+        </a>
+        Entry last updated by {{ role["update_user"] }} at {{ role["update_time"] }}.&nbsp;&nbsp;
+        <a href="/update/role/{{ role['id'] }}" title="Update Role">
+          <img src="/static/pictures/edit/edit_pencil.png" alt="Edit Role" title="Edit Role" class="edit_pic">
+        </a>
+      </td>
+    </tr>
+  </tfoot>
+  {% else %}
+  <tr>
+    <td>
+      <h3>No role matches this id.</h3>
+    </td>
+  </tr>
+  {% endif %}
+</table>
+{% endblock %}

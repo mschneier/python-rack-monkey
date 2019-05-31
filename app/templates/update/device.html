@@ -1,0 +1,295 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Update Device</h2>
+<form action="" name="device" id="device" method="POST" class="container add_device" enctype="multipart/form-data">
+  <div class="panel panel-primary">
+    {{ form.hidden_tag() }}{{ form.csrf_token }}
+    <div class="panel-body">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="dev_name" class="control-label">Name *</label>
+            {{ form.dev_name(id="dev_name", maxlength="99", value=sel_name, class="form-control", size="30", required="") }}
+            {% for error in form.dev_name.errors %}
+              <span class="error">[{{ error }}]</span>
+              <br>
+            {% endfor %}
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="domain" class="control-label">Domain *</label>
+            <select name="domain" id="domain" class="form-control" required>
+              {% for domain in domains %}
+                {% if domain[0] == sel_dom %}
+                  <option value="{{ domain[0] }}" selected>{{ domain[1] }}</option>
+                {% else %}
+                  <option value="{{ domain[0] }}">{{ domain[1] }}</option>
+                {% endif %}
+              {% endfor %}
+            </select>
+            {% for error in form.domain.errors %}
+              <span class="error">[{{ error }}]</span>
+              <br>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+      <hr>
+      <div class="row">
+        <div class="col-md-6">
+          <ul style="display:none;" id="rack_sizes">
+            {% for rack in racks %}
+            <li>{{ rack[0] }}, {{ rack[2] }}</li>
+            {% endfor %}
+          </ul>
+          <div class="form-group">
+            <label for="rack_name" class="control-label">Rack *</label>
+            <select name="rack_name" id="rack_name" class="form-control" required>
+              {% for rack in racks %}
+                {% if rack[0] == sel_rack %}
+                  <option value="{{ rack[0] }}" selected>{{ rack[1] }}</option>
+                {% else %}
+                  <option value="{{ rack[0] }}">{{ rack[1] }}</option>
+                {% endif %}
+              {% endfor %}
+            </select>
+            {% for error in form.rack_name.errors %}
+              <span class="error">[{{ error }}]</span>
+              <br>
+            {% endfor %}
+          </div>
+        </div>
+        <div class="col-md-6">
+          <ul style="display:none;" id="occupied_slots">
+            {% for occupied in occupieds %}
+            <li>{{ occupied[0] }}, {{ occupied[1] }}</li>
+            {% endfor %}
+          </ul>
+          <div class="form-group">
+            <label for="rack_pos" class="control-label">Rack Position *</label><br>
+            {{ form.rack_pos(id="rack_pos", value=sel_pos, min="1", max="10", required="") }}
+            {% for error in form.rack_pos.errors %}
+              <span class="error">[{{ error }}]</span>
+              <br>
+            {% endfor %}
+            <span style="display:none;" id="occupied"></span>
+            <span class="error" id="rack_msg" style="display:none;">
+              A device is already using this rack position.
+            </span>
+          </div>
+        </div>
+      </div>
+      <hr>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="manufacturer" class="control-label">Manufacturer *</label>
+            <select name="org" id="manufacturer" class="form-control" required>
+              <option value="">Select Manufacturer</option>
+              {% for org in orgs %}
+                {% if org[0] == sel_man %}
+                  <option value="{{ org[0] }}" selected>{{ org[1] }}</option>
+                {% else %}
+                  <option value="{{ org[0] }}">{{ org[1] }}</option>
+                {% endif %}
+              {% endfor %}
+            </select>
+            {% for error in form.org.errors %}
+              <span class="error">[{{ error }}]</span>
+              <br>
+            {% endfor %}
+          </div>
+        </div>
+        <div class="col-md-6">
+          <ul style="display:none;" id="hard_models">
+            {% for hardware in hardwares %}
+            <li>{{ hardware[0] }}, {{ hardware[1] }}, {{ hardware[2] }}, {{ hardware[3] }}</li>
+            {% endfor %}
+          </ul>
+          <div class="form-group">
+            <label for="model" class="control-label">Hardware Model *</label>
+            <select name="model" id="model" class="form-control" required>
+              <option value="{{ sel_hard_id }}">{{ sel_hard_name }}</option>
+            </select>
+          </div>
+        </div>
+      </div><hr>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="os" class="control-label">OS *</label>
+            <select name="os" id="os" class="form-control" required style="width:auto;">
+              {% for os in oses %}
+                {% if os[0] == sel_os %}
+                  <option value="{{ os[0] }}" selected>{{ os[1] }}</option>
+                {% else %}
+                  <option value="{{ os[0] }}">{{ os [1] }}</option>
+                {% endif %}
+              {% endfor %}
+            </select>
+            {% for error in form.os.errors %}
+              <span class="error">[{{ error }}]</span>
+              <br>
+            {% endfor %}
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="version" class="control-label">Version (Please provide if possible)</label>
+              {{ form.version(id="version", version=sel_version, size="10", class="form-control") }}
+              {% for error in form.version.errors %}
+                <span class="error">[{{ error }}]</span>
+                <br>
+              {% endfor %}
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="key" class="control-label">OS Licence Key</label>
+            {{ form.key(id="key", value=sel_key, size="25", class="form-control")}}
+            {% for error in form.key.errors %}
+              <span class="error">[{{ error }}]</span>
+              <br>
+            {% endfor %}
+            <span id="key_error" class="error" style="display:none;">
+              A device is already using this licence key.
+            </span>
+          </div>
+        </div>
+      </div><hr>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="role" class="control-label">Role *</label>
+            <select name="role" id="role" name="role" required style="width:auto;" class="form-control">
+              {% for role in roles %}
+                {% if role[0] == sel_role %}
+                  <option value="{{ role[0] }}" selected>{{ role[1] }}</option>
+                {% else %}
+                  <option value="{{ role[0] }}">{{ role[1] }}</option>
+                {% endif %}
+              {% endfor %}
+            </select>
+            {% for error in form.role.errors %}
+              <span class="error">[{{ error }}]</span>
+              <br>
+            {% endfor %}
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="in_service" class="control-label">In Service</label>
+            {% if sel_in_service %}
+              <input type="checkbox" name="in_service" id="in_service" value="in_service" checked>
+            {% else %}
+              <input type="checkbox" name="in_service" id="in_service" value="in_service">
+            {% endif %}
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="purchased" class="control-label">Purchased (YYYY-MM-DD)</label>
+            {{ form.purchased(id="purchased", value=sel_purchased, placeholder="YYYY-MM-DD", title="Enter a date in this format YYYY-MM-DD", class="form-control", pattern="(?:19|20)[0-9]{2}-(?:(?:0[1-9]|1[0-2])-(?:0[1-9]|1[0-9]|2[0-9])|(?:(?!02)(?:0[1-9]|1[0-2])-(?:30))|(?:(?:0[13578]|1[02])-31))") }}
+            {% for error in form.purchased.errors %}
+              <span class="error">[{{ error }}]</span>
+              <br>
+            {% endfor %}
+          </div>
+        </div>
+      </div><hr>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="serial" class="control-label">Serial #</label>
+            {{ form.serial(id="serial", value=sel_serial, class="form-control", size="30") }}
+            {% for error in form.serial.errors %}
+              <span class="error">[{{ error }}]</span>
+              <br>
+            {% endfor %}
+            <span id="serial_error" class="error" style="display:none;">
+              A device is already using this serial #.
+            </span>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="asset" class="control-label">Asset #</label>
+            {{ form.asset(id="asset", value=sel_asset, class="form-control", size="30") }}
+            {% for error in form.asset.errors %}
+              <span class="error">[{{ error }}]</span>
+              <br>
+            {% endfor %}
+            <span id="asset_error" class="error" style="display:none;">
+              A device is already using this asset #.
+            </span>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="customer" class="control-label">Customer *</label>
+            <select name="customer" id="customer" class="form-control" style="width:auto;" required>
+              <option value="">Select a Customer</option>
+              {% for customer in customers %}
+                {% if customer[0] == sel_cust %}
+                  <option value="{{ customer[0] }}" selected>{{ customer[1] }}</option>
+                {% else %}
+                  <option value="{{ customer[0] }}">{{ customer[1] }}</option>
+                {% endif %}
+              {% endfor %}
+            </select>
+            {% for error in form.customer.errors %}
+              <span class="error">[{{ error }}]</span>
+              <br>
+            {% endfor %}
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="service_level" class="control-label">Service Level *</label>
+            <select name="service_level" id="service_level" class="form-control" required>
+              <option value="">Select a Service Level</option>
+              {% for service in services %}
+                {% if service[0] == sel_service %}
+                  <option value="{{ service[0] }}" selected>{{ service[1] }}</option>
+                {% else %}
+                  <option value="{{ service[0] }}">{{ service[1] }}</option>
+                {% endif %}
+              {% endfor %}
+            </select>
+            {% for error in form.service_level.errors %}
+              <span class="erorr">[{{ error }}]</span>
+              <br>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+      <hr>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <b>Notes</b>&nbsp;&nbsp;<input type="button" name="show_style_syntax" value="Show Style Syntax"
+              id="show_style_syntax">
+            <textarea form="device" name="notes" id="notes" cols="30" rows="10" maxlength="500" class="form-control">{{ sel_notes }}</textarea>
+          </div>
+          <p id="style_syntax" style="display:none;">
+            <b>Notes Style Syntax</b><br>
+            Italics: **example** = <i>example</i><br>
+            Bold: ***example*** = <b>example</b><br>
+            Link: [https://www.example.com|example link] = <a href="https://www.example.com">example link</a>
+          </p>
+        </div>
+      </div>
+    </div>
+    <p>* = Required</p>
+    <input type="submit" name="submitBtn" id="submitBtn" class="btn btn-primary" value="Submit" disabled>
+  </div>
+</form>
+<script src="/static/js/devices/check_occupied_update.js"></script>
+<script src="/static/js/devices/make_hardware_list.js"></script>
+<script src="/static/js/devices/select_rack.js"></script>
+<script src="/static/js/form_validation/show_style_syntax.js"></script>
+<script src="/static/js/form_validation/device_validation_update.js"></script>
+{% endblock %}

@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block content %}
+<h1 class="title">Login</h1>
+<h5 class="title">Note: Only members of the IT or HR departments can login.</h5><br>
+<form action="" method="POST" id="login_form" class="container">
+  <div class="panel panel-primary">
+    {{ form.hidden_tag() }} {{ form.csrf_token }}
+    <div class="panel-body">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label class="control-label" for="username">Username</label>
+            {{ form.username(id="username", maxlength="99", size="25", type="text", class="form-control") }}
+            <span id="user_error" class="error"></span><br>
+            {% for error in form.username.errors %}
+              <span style="color:red;">[{{ error }}]</span>
+              <br>
+            {% endfor %}<br>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label class="control-label" for="reason">Password</label>
+            {{ form.password(id="password", maxlength="999", type="password", class="form-control") }}
+            {% for error in form.password.errors %}
+              <span style="color:red;">[{{ error }}]</span>
+              <br>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </div>
+    <input type="submit" class="btn btn-primary" value="Submit" name="submit" id="submitButton">
+  </div>
+</form>
+<script type="text/javascript" src="/static/js/form_validation/login_validation.js"></script>
+{% endblock %}

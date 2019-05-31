@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block content %}
+<table class="config_table">
+  <thead class="table_head">
+    <tr>
+      <th>
+        <a href="/view/rooms/all/?sort=room.name">Room</a>
+        <a href="/add/room/new/">
+          <img src="/static/pictures/edit/add_circle.png" alt="Add Room" title="Add Room"
+            class="edit_pic">
+        </a>
+      </th>
+      <th><a href="/view/rooms/all/?sort=building.name">Building</a></th>
+      <th><a href="/view/rooms/all/?sort=room.notes">Notes</a></th>
+    </tr>
+  </thead>
+  <tbody class="all_rooms">
+    {% for room in rooms %}
+      <tr>
+        <td>
+          <a href="/view/rooms/single/{{ room['id'] }}">{{ room["name"] }}</a>
+          <a href="/delete/room/{{ room['room_id'] }}">
+            <img src="/static/pictures/edit/delete_circle.png" id="del_pic" class="edit_pic"
+              alt="Delete Room #{{ room['room_id'] }}" title="Delete Room #{{ room['room_id'] }}">
+          </a>
+          <a href="/update/room/{{ room['id'] }}">
+            <img src="/static/pictures/edit/edit_pencil.png" alt="Edit Room" title="Edit Room" class="edit_pic">
+          </a>
+        </td>
+        {% if room["building"] %}
+          <td>{{ room["building"] }}</td>
+        {% else %}
+          <td>-</td>
+        {% endif %}
+        {% if room["notes"] %}
+          <td>{{ room["notes"] }}</td>
+        {% else %}
+          <td>-</td>
+        {% endif %}
+      </tr>
+    {% endfor %}
+  </tbody>
+  <tfoot class="table_footer">
+    <tr>
+      <td colspan="42">Showing {{ rooms_len }} of {{ rooms_len }} rooms.</td>
+    </tr>
+  </tfoot>
+</table>
+{% endblock %}

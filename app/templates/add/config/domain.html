@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Create Domain</h2>
+<form action="" name="domain" id="domain" method="POST" class="container add_domain" enctype="multipart/form-data">
+  <div class="panel panel-primary">
+    {{ form.hidden_tag() }}{{ form.csrf_token }}
+    <div class="panel-body">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="name" class="control-label">Name *</label>
+            {{ form.name(id="name", size="30", maxlength="99", class="form-control", required="") }}
+            {% for error in form.name.errors %}
+              <span class="error">[{{ error }}]</span>
+              <br>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+      <hr>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="description" class="control-lavel">Description</label>
+            {{ form.description(id="description", class="form-control", form="domain", cols="30", rows="10") }}
+            {% for error in form.description.errors %}
+              <span class="error">[{{ error }}]</span>
+              <br>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+      <hr>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <b>Notes</b>&nbsp;&nbsp;<input type="button" name="show_style_syntax" value="Show Style Syntax"
+              id="show_style_syntax">
+            {{ form.notes(id="notes", form="domain", cols="30", rows="10", maxlength="500", class="form-control") }}
+            {% for error in form.notes.errors %}
+              <span class="error">[{{ error }}]</span>
+              <br>
+            {% endfor %}
+          </div>
+          <p id="style_syntax" style="display:none;">
+            <b>Notes Style Syntax</b><br>
+            Italics: **example** = <i>example</i><br>
+            Bold: ***example*** = <b>example</b><br>
+            Link: [https://www.example.com|example link] = <a href="https://www.example.com">example link</a>
+          </p>
+        </div>
+      </div>
+    </div>
+    <p>* = Required</p>
+    <input type="submit" name="submitBtn" id="submitBtn" class="btn btn-primary" value="Submit">
+  </div>
+</form>
+<script src="/static/js/form_validation/show_style_syntax.js"></script>
+<script src="/static/js/form_validation/domain_validation.js"></script>
+{% endblock %}

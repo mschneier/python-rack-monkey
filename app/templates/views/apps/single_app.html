@@ -1,0 +1,94 @@
+{% extends "base.html" %}
+{% block content %}
+<table class="config_table">
+  <thead class="table_head">
+    <tr>
+      <th colspan="42">
+        Apps
+        <a href="/add/app/new/">
+          <img src="/static/pictures/edit/add_circle.png" alt="Add App" title="Add App" class="edit_pic">
+        </a>
+        <a href="/view/apps/all/">
+          <input type="button" value="View All" class="dev_buttons" style="color:black;">
+        </a>
+      </th>
+    </tr>
+  </thead>
+  {% if app %}
+  <tbody>
+    <tr>
+      <td>
+        <p class="key">Name</p>
+        {{ app["name"] }}
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <p class="key">Description</p>
+        {% if app["descript"] %}
+          {{ app["descript"]}}
+        {% else %}
+          -
+        {% endif %}
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <p class="key">Notes</p>
+        {% if app["notes"] %}
+          {{ app["notes"] }}
+        {% else %}
+          -
+        {% endif %}
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <p class="key">
+          Devices Used
+          <a href="/add/app/relation/{{ app['id'] }}">
+            <img src="/static/pictures/edit/add_circle.png" alt="Add Relationship For {{ app['name'] }}"
+              title="Add Relationship For {{ app['name'] }}" class="edit_pic">
+          </a>
+        </p>
+        {% if app["devices"] %}
+          <hr>
+          <ul id="app_device_relationships">
+            {% for dev in app["devices"] %}
+              <li>
+                {{ dev["name"] }}&nbsp;{{ dev["relation"] }}&nbsp;{{ app["name"] }}
+                <a href="/delete/relationship/{{ dev['device_app'] }}" class="del_relation" title="Delete This Relationship">
+                  <img class="edit_pic" src="/static/pictures/edit/delete_circle.png" alt="Delete Relationship #{{ dev['device_app'] }}">
+                </a>
+              </li>
+            {% endfor %}
+          </ul>
+        {% else %}
+          <i>This app does not use any devices.</i>
+        {% endif %}
+      </td>
+    </tr>
+  </tbody>
+  <tfoot class="table_footer">
+    <tr>
+      <td colspan="42">
+        <a href="/delete/app/{{ app['id'] }}" title="Delete App #{{ app['id'] }}">
+          <img src="/static/pictures/edit/delete_circle.png" id="del_pic"
+            alt="Delete App #{{ app['id'] }}" class="delete_pic">
+        </a>
+        Entry last updated by {{ app["update_user"] }} at {{ app["update_time"] }}.&nbsp;&nbsp;
+        <a href="/update/app/{{ app['id'] }}" title="Update app.">
+          <img src="/static/pictures/edit/edit_pencil.png" alt="Edit App" title="Edit App" class="edit_pic">
+        </a>
+      </td>
+    </tr>
+  </tfoot>
+  {% else %}
+  <tr>
+    <td>
+      <h3>No app with this id.</h3>
+    </td>
+  </tr>
+  {% endif %}
+</table>
+{% endblock %}

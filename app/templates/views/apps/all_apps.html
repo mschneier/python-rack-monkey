@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block content %}
+<table class="config_table">
+  <thead class="table_head">
+    <tr>
+      <th>
+        <a href="/view/apps/all/?sort=app.name">App</a>
+        <a href="/add/app/new/">
+          <img src="/static/pictures/edit/add_circle.png" alt="Add App" title="Add App" class="edit_pic">
+        </a>
+      </th>
+      <th><a href="/view/apps/all/?sort=app.descript">Description</a></th>
+      <th><a href="/view/apps/all/?sort=app.notes">Notes</a></th>
+    </tr>
+  </thead>
+  <tbody class="all_apps">
+    {% for app in apps %}
+      <tr>
+        <td>
+          <a href="/view/apps/single/{{ app['id'] }}">{{ app["name"] }}</a>
+          <a href="/delete/app/{{ app['id'] }}" title="Delete App #{{ app['name'] }}">
+            <img src="/static/pictures/edit/delete_circle.png" id="del_pic" alt="Delete App #{{ app['id'] }}"
+              class="edit_pic">
+          </a>
+          <a href="/update/app/{{ app['id'] }}">
+            <img src="/static/pictures/edit/edit_pencil.png" alt="Edit App" title="Edit App" class="edit_pic">
+          </a>
+        </td>
+        {% if app["descript"] %}
+          <td>{{ app["descript"] }}</td>
+        {% else %}
+          <td>-</td>
+        {% endif %}
+        {% if app["notes"] %}
+          <td>{{ app["notes"] }}</td>
+        {% else %}
+          <td>-</td>
+        {% endif %}
+      </tr>
+    {% endfor %}
+  </tbody>
+  <tfoot class="table_footer">
+    <tr>
+      <td colspan="42">Showing {{ apps_len }} of {{ apps_len }} apps.</td>
+    </tr>
+  </tfoot>
+</table>
+{% endblock %}

@@ -1,0 +1,99 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="report_links">
+  <a href="/view/reports/main/">Reports Index</a> | <a href="/view/reports/device_count/">Device Counts</a> | <a href="/view/reports/dups/">Duplicates</a>
+</div>
+<h2>Device Count Report</h2>
+<p>The following four tables show the top customers, roles, hardware and os'es.<br>
+  The <b>Size (U)</b> column shows the <em>total</em> space the devices of this type occupy, regardless of whether they
+  are racked or not.</p>
+<h3>Customers</h3>
+<p>Top ten <a href="/view/customers/all/">customers</a> by devices hosted.</p>
+<table class="report_table">
+  <thead>
+    <tr>
+      <th>Count</th>
+      <th>Customer</th>
+      <th>Size (U)</th>
+      <th>Devices</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for customer in customers %}
+    <tr>
+      <td>{{ customer[0] }}</td>
+      <td><a href="/view/orgs/single/{{ customer[3] }}">{{ customer[1] }}</a></td>
+      <td>{{ customer[2] }}</td>
+      <td><a href="/view/devices/?customer={{ customer[3] }}">View</a></td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+<h3>Roles</h3>
+<p>Top ten <a href="/view/roles/all">roles</a> by devices in role.</p>
+<table class="report_table">
+  <thead>
+    <tr>
+      <th>Count</th>
+      <th>Role</th>
+      <th>Size (U)</th>
+      <th>Devices</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for role in roles %}
+    <tr>
+      <td>{{ role [0] }}</td>
+      <td><a href="/view/roles/single/{{ roles[3] }}">{{ role[1] }}</a></td>
+      <td>{{ role[2] }}</td>
+      <td><a href="/view/devices/?role={{ role[3] }}">View</a></td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+<h3>Hardware</h3>
+<p>Top ten <a href="/view/hardware/all">hardware</a> models hosted.</p>
+<table class="report_table">
+  <thead>
+    <tr>
+      <td>Count</td>
+      <td>Hardware</td>
+      <td>Size (U)</td>
+      <td>Devices</td>
+    </tr>
+  </thead>
+  <tbody>
+    {% for hardware in hardwares %}
+    <tr>
+      <td>{{ hardware[0] }}</td>
+      <td><a href="/view/hardware/single/{{ hardware[3] }}">{{ hardware[1] }}</a></td>
+      <td>{{ hardware[2] }}</td>
+      <td><a href="/view/devices/?hardware={{ hardware[3] }}">View</a></td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+<h3>Operating Systems</h3>
+<p>Top ten <a href="/view/oses/all">operating systems</a> used.</p>
+<table class="report_table">
+  <thead>
+    <tr>
+      <td>Count</td>
+      <td>OS</td>
+      <td>Size (U)</td>
+      <td>Devices</td>
+    </tr>
+  </thead>
+  <tbody>
+    {% for os in oses %}
+    <tr>
+      <td>{{ os[0] }}</td>
+      <td><a href="/view/oses/single/{{ os[3] }}">{{ os[1] }}</a></td>
+      <td>{{ os[2] }}</td>
+      <td><a href="/view/devices/?os={{ os[3] }}">View</a></td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+<br>
+{% endblock %}

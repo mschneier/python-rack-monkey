@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% block content %}
+<table class="config_table">
+  <thead class="table_head">
+    <tr>
+      <th colspan="42">
+        Oses
+        <a href="/add/os/new/">
+          <img src="/static/pictures/edit/add_circle.png" alt="Add OS" title="Add OS" class="edit_pic">
+        </a>
+        <a href="/view/oses/all/">
+          <input type="button" value="View All">
+        </a>
+      </th>
+    </tr>
+  </thead>
+  {% if os %}
+  <tbody>
+    <tr>
+      <td>
+        <p class="key">Name</p>
+        {{ os["name"] }}&nbsp;&nbsp;&nbsp;
+        <a href="/view/devices/default/?os={{ os['id'] }}">Devices with this os.</a>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <p class="key">Developer</p>
+        {{ os["maker"] }}
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <p class="key">Notes</p>
+        {% if os["notes"] %}
+          {{ os["notes"] }}
+        {% else %}
+          -
+        {% endif %}
+      </td>
+    </tr>
+  </tbody>
+  <tfoot class="table_footer">
+    <tr>
+      <td colspan="42">
+        <a href="/delete/os/{{ os['id'] }}">
+          <img src="/static/pictures/edit/delete_circle.png" id="del_pic" class="delete_pic"
+            alt="Delete OS #{{ os['id'] }}" title="Delete OS #{{ os['id'] }}">
+        </a>
+        Entry last updated by {{ os["update_user"] }} at {{ os["update_time"] }}.&nbsp;&nbsp;
+        <a href="/update/os/{{ os['id'] }}" title="Update OS">
+          <img src="/static/pictures/edit/edit_pencil.png" alt="Edit OS" title="Edit OS" class="edit_pic">
+        </a>
+      </td>
+    </tr>
+  </tfoot>
+  {% else %}
+  <tr>
+    <td>
+      <h3>No OS matches this id.</h3>
+    </td>
+  </tr>
+  {% endif %}
+</table>
+{% endblock %}

@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+{% block content %}
+<table class="config_table">
+  <thead class="table_head">
+    <tr>
+      <th colspan="42">
+        Buildings
+        <a href="/add/building/new/">
+          <img src="/static/pictures/edit/add_circle.png" alt="Add Building" title="Add Building" class="edit_pic">
+        </a>
+        <a href="/view/buildings/all/">
+          <input type="button" value="View All">
+        </a>
+      </th>
+    </tr>
+  </thead>
+  {% if building %}
+  <tbody>
+    <tr>
+      <td>
+        <p class="key">Name</p>
+        {{ building["name"] }}
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <p class="key">Short Name</p>
+        {% if building["name_short"] %}
+          {{ building["name_short"]}}
+        {% else %}
+         -
+        {% endif %}
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <p class="key">Rooms</p>
+        {% if building["rooms"] %}
+          {% for room in building["rooms"] %}
+            <a href="/view/rooms/single/{{ room['id'] }}">{{ room["name"] }}</a>,&nbsp;
+          {% endfor %}
+        {% else %}
+          <i>This building does not have any rooms.</i>
+        {% endif %}
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <p class="key">Notes</p>
+        {% if building["notes"] %}
+          {{ building["notes"] }}
+        {% else %}
+          -
+        {% endif %}
+      </td>
+    </tr>
+  </tbody>
+  <tfoot class="table_footer">
+    <tr>
+      <td colspan="42">
+        <a href="/delete/building/{{ building['id'] }}" title="Delete Building #{{ building['id'] }}">
+          <img src="/static/pictures/edit/delete_circle.png" id="del_pic" class="delete_pic"
+            alt="Delete Building #{{ building['id'] }}">
+        </a>
+        Entry last updated by {{ building["update_user"] }} at {{ building["update_time"] }}.&nbsp;&nbsp;
+        <a href="/update/building/{{ building['id'] }}" title="Update building">
+          <img src="/static/pictures/edit/edit_pencil.png" alt="Edit Building" title="Edit Building" class="edit_pic">
+        </a>
+      </td>
+    </tr>
+  </tfoot>
+  {% else %}
+  <tr>
+    <td>
+      <h3>No building matches this id.</h3>
+    </td>
+  </tr>
+  {% endif %}
+</table>
+<script src="/static/js/delete/building.js"></script>
+{% endblock %}

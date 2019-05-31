@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% block content %}
+<table class="config_table">
+  <thead class="table_head">
+    <tr>
+      <th colspan="42">
+        Services
+        <a href="/add/service/new/">
+          <img src="/static/pictures/edit/add_circle.png" alt="Add Service Level" title="Add Service Level"
+            class="edit_pic">
+        </a>
+        <a href="/view/services/all/">
+          <input type="button" value="View All">
+        </a>
+      </th>
+    </tr>
+  </thead>
+  {% if service %}
+  <tbody>
+    <tr>
+      <td>
+        <p class="key">Name</p>
+        {{ service["name"] }}
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <p class="key">Description</p>
+        {{ service["descript"] }}
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <p class="key">Notes</p>
+        {% if service["notes"] %}
+          {{ service["notes"] }}
+        {% else %}
+          -
+        {% endif %}
+      </td>
+    </tr>
+  </tbody>
+  <tfoot class="table_footer">
+    <tr>
+      <td colspan="42">
+        <a href="/delete/service/{{ service['id'] }}">
+          <img src="/static/pictures/edit/delete_circle.png" id="del_pic" class="delete_pic"
+            alt="Delete Service #{{ service['id'] }}" title="Delete Service #{{ service['id'] }}">
+        </a>
+        Entry last updated by {{ service["update_user"] }} at {{ service["update_time"] }}.&nbsp;&nbsp;
+        <a href="/update/service/{{ service['id'] }}" title="Update Service">
+          <img src="/static/pictures/edit/edit_pencil.png" alt="Edit Service" title="Edit Service" class="edit_pic">
+        </a>
+      </td>
+    </tr>
+  </tfoot>
+  {% else %}
+  <tr>
+    <td>
+      <h3>No service matches this id.</h3>
+    </td>
+  </tr>
+  {% endif %}
+</table>
+{% endblock %}

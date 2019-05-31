@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    {% if title %}
+      <title>{{ title }} - Rack</title>
+    {% else %}
+      <title>Rolodex</title>
+    {% endif %}
+    <link rel="apple-touch-icon" sizes="180x180"
+      href="/static/pictures/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32"
+      href="/static/pictures/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16"
+      href="/static/pictures/favicon/favicon-16x16.png">
+    <link rel="manifest" href="/static/pictures/favicon/manifest.json">
+    <link rel="mask-icon"
+      href="/static/pictures/favicon/safari-pinned-tab.svg" color="#5bbad5">
+    <link rel="shortcut icon" href="/static/pictures/favicon/favicon.ico">
+    <link rel="stylesheet" type="text/css" href="/static/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/css/rack.css">
+    <script type="text/javascript" src="/static/js/jquery-3.4.0.min.js"></script>
+    <script type="text/javascript" src="/static/js/jqueryValidation/jquery.validate.min.js"></script>
+  </head>
+  <body>
+    <div id="header">
+      <ul class="nav">
+        {% if session.logged_in %}
+          <li><a href="/view/devices/default/" target="_self">Devices</a></li>
+          <li><a href="/view/racks/all/" target="_self">Racks</a></li>
+          <li><a href="/view/apps/all/" target="_self">Apps</a></li>
+          <li><a href="/view/config/" target="_self">Config</a></li>
+          <li><a href="/view/reports/main/" target="_self">Reports</a></li>
+          <li><a href="/logout/" target="_self">Logout</a></li>
+          <form class="search" id="search_form" action="">
+            <input type="submit" name="search_button" value="Find">
+            <input type="text" name="search" value="" required placeholder="Search devices..." id="search_text">
+          </form>
+        {% else %}
+          <li><a href="/login/" target="_self">Login</a></li>
+        {% endif %}
+      </ul>
+    </div>
+    <noscript>
+      <h2><i>Please enable JavaScript to fill out form.</i></h2>
+    </noscript>
+    {% with messages = get_flashed_messages(category_filter=["danger"]) %}
+      {% if messages %}
+        {% for message in messages %}
+          <div class="alert alert-danger">{{ message }}</div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+    {% with messages = get_flashed_messages(category_filter=["info"]) %}
+      {% if messages %}
+        {% for message in messages %}
+          <div class="alert alert-info">{{ message }}</div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+    {% with messages = get_flashed_messages(category_filter=["success"]) %}
+      {% if messages %}
+        {% for message in messages %}
+          <div class="alert alert-success">{{ message }}</div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+    {% block content %}{% endblock %}
+    <script type="text/javascript" src="/static/js/devices/search.js"></script>
+  </body>
+</html>

@@ -1,0 +1,119 @@
+{% extends "base.html" %}
+{% block content %}
+<table class="config_table">
+  <thead class="table_head">
+    <tr>
+      <th colspan="42">
+        Orgs
+        <a href="/add/org/new/">
+          <img src="/static/pictures/edit/add_circle.png" alt="Add Org" title="Add Org" class="edit_pic">
+        </a>
+        <a href="/view/orgs/all/">
+          <input type="button" value="View All">
+        </a>
+      </th>
+    </tr>
+  </thead>
+  {% if org %}
+  <tbody>
+    <tr>
+      <td>
+        <p class="key">Name</p>
+        {{ org["name"] }}
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <p class="key">Description</p>
+        {% if org["descript"] %}
+          {{ org["descript"] }}
+        {% else %}
+          -
+        {% endif %}
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <p class="key">Account Number</p>
+        {% if org["account_no"] %}
+          {{ org["account_no"] }}
+        {% else %}
+          -
+        {% endif %}
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <p class="key">Customer</p>
+        {% if org["customer"] %}
+          <input type="checkbox" class="org_checkbox" checked disabled>
+        {% else %}
+          <input type="checkbox" class="org_checkbox" disabled>
+        {% endif %}
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <p class="key">Makes Software</p>
+        {% if org["software"] %}
+          <input type="checkbox" class="org_checkbox" checked disabled>
+        {% else %}
+          <input type="checkbox" class="org_checkbox" disabled>
+        {% endif %}
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <p class="key">Makes Hardware</p>
+        {% if hard["hardware"] %}
+          <input type="checkbox" class="org_checkbox" checked disabled>
+        {% else %}
+          <input type="checkbox" class="org_checkbox" disabled>
+        {% endif %}
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <p class="key">Home Page</p>
+        {% if org["home_page"] %}
+          <a href="{{ org ['home_page'] }}" title="{{ org['home_page'] }}">LINK</a>
+        {% else %}
+          -
+        {% endif %}
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <p class="key">Notes</p>
+        {% if org["notes"] %}
+          {{ org["notes"] }}
+        {% else %}
+          -
+        {% endif %}
+      </td>
+    </tr>
+  </tbody>
+  <tfoot class="table_footer">
+    <tr>
+      <td colspan="42">
+        <a href="/delete/org/{{ org['id'] }}" title="Delete Org #{{ org['id'] }}">
+          <img src="/static/pictures/edit/delete_circle.png" id="del_pic" class="delete_pic"
+            alt="Delete Org #{{ org['id'] }}">
+        </a>
+        Entry last updated by {{ org["update_user"] }} at {{ org["update_time"] }}.&nbsp;&nbsp;
+        <a href="/update/org/{{ org['id'] }}" title="Update Org">
+          <img src="/static/pictures/edit/edit_pencil.png" alt="Edit Org" title="Edit Org" class="edit_pic">
+        </a>
+      </td>
+    </tr>
+  </tfoot>
+  {% else %}
+  <tr>
+    <td>
+      <h3>No org matches this id.</h3>
+    </td>
+  </tr>
+  {% endif %}
+</table>
+<script src="/static/js/delete/org.js"></script>
+{% endblock %}

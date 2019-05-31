@@ -1,0 +1,102 @@
+{% extends "base.html" %}
+{% block content %}
+<table class="config_table">
+  <thead class="table_head">
+    <tr>
+      <th colspan="42">
+        Hardwares
+        <a href="/add/hardware/new/">
+          <img src="/static/pictures/edit/add_circle.png" alt="Add Hardware" title="Add Hardware"
+            class="edit_pic">
+        </a>
+        <a href="/view/hardwares/all/">
+          <input type="button" value="View All">
+        </a>
+      </th>
+    </tr>
+  </thead>
+  {% if hardware %}
+  <tbody>
+    <tr>
+      <td>
+        <p class="key">Name</p>
+        {{ hardware["name"] }}&nbsp;&nbsp;&nbsp;<a href="/view/devices/default/?hardware={{ hardware ['id'] }}">Devices with this hardware.</a>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <p class="key">Manufacturer</p>
+        {{ hardware["manufacturer"] }}
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <p class="key">Size (U)</p>
+        {{ hardware["size"] }}
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <p class="key">Image File</p>
+        {% if hardware["image"] %}
+          {{ hardware["image"] }}
+        {% else %}
+          -
+        {% endif %}
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <p class="key">Support URL</p>
+        {% if hardware["support"] %}
+          {{ hardware["support"] }}
+        {% else %}
+          -
+        {% endif %}
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <p class="key">Specs URL</p>
+        {% if hardware["spec"] %}
+          {{ hardware["spec"] }}
+        {% else %}
+          -
+        {% endif %}
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <p class="key">Notes</p>
+        {% if hardware["notes"] %}
+          {{ hardware["notes"] }}
+        {% else %}
+          -
+        {% endif %}
+      </td>
+    </tr>
+  </tbody>
+  <tfoot class="table_footer">
+    <tr>
+      <td colspan="42">
+        <a href="/delete/hardware/{{ hardware['id'] }}" title="Delete Hardware #{{ hardware['id'] }}">
+          <img src="/static/pictures/edit/delete_circle.png" id="del_pic" class="delete_pic"
+            alt="Delete Hardware #{{ hardware['id'] }}">
+        </a>
+        Entry last updated by {{ hardware["update_user"] }} at {{ hardware["update_time"] }}.&nbsp;&nbsp;
+        <a href="/update/hardware/{{ hardware['id'] }}" title="Update Hardware">
+          <img src="/static/pictures/edit/edit_pencil.png" alt="Edit Hardware" title="Edit Hardware" class="edit_pic">
+        </a>
+      </td>
+    </tr>
+  </tfoot>
+  {% else %}
+  <tr>
+    <td>
+      <h3>No hardware matches this id.</h3>
+    </td>
+  </tr>
+  {% endif %}
+</table>
+<script src="/static/js/delete/hardware.js"></script>
+{% endblock %}

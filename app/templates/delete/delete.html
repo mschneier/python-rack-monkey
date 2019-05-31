@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block content %}
+<h1 class="title">Delete {{ category }}</h1>
+<form action="" method="POST" id="delete_form" class="container">
+  <div class="panel panel-primary">
+    {{ form.hidden_tag() }} {{ form.csrf_token }}
+    <div class="panel-body">
+      <div class="row">
+        <h3>Delete {{ category }} {{ name }}?</h3><input type="submit" class="btn btn-primary delete-button"
+          value="Delete" name="submitBtn" id="submitButton">
+      </div>
+    </div>
+  </div>
+</form>
+<p id="category" style="display:none;">{{ category }}</p>
+<script type="text/javascript" src="/static/js/delete/delete.js"></script>
+{% endblock %}

@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% block content %}
+<table class="config_table">
+  <thead class="table_head">
+    <tr>
+      <th colspan="42">
+        Domains
+        <a href="/add/domain/new/">
+          <img src="/static/pictures/edit/add_circle.png" alt="Add Domain" title="Add Domain" class="edit_pic">
+        </a>
+        <a href="/view/domains/all/">
+          <input type="button" value="View All">
+        </a>
+      </th>
+    </tr>
+  </thead>
+  {% if domain %}
+  <tbody>
+    <tr>
+      <td>
+        <p class="key">Name</p>
+        {{ domain["name"] }}
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <p class="key">Description</p>
+        {{ domain["descript"] }}
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <p class="key">Notes</p>
+        {% if domain["notes"] %}
+          {{ domain["notes"] }}
+        {% else %}
+          -
+        {% endif %}
+      </td>
+    </tr>
+  </tbody>
+  <tfoot class="table_footer">
+    <tr>
+      <td colspan="42">
+        <a href="/delete/domain/{{ domain['id'] }}" title="Delete Domain #{{ domain['id'] }}">
+          <img src="/static/pictures/edit/delete_circle.png" id="del_pic" class="delete_pic"
+            alt="Delete Domain #{{ domain['id'] }}">
+        </a>
+        Entry last updated by {{ domain["update_user"] }} at {{ domain["update_time"] }}.&nbsp;&nbsp;
+        <a href="/update/domain/{{ domain['id'] }}" tile="Update Domain">
+          <img src="/static/pictures/edit/edit_pencil.png" alt="Edit Device" title="Edit Device" class="edit_pic">
+        </a>
+      </td>
+    </tr>
+  </tfoot>
+  {% else %}
+  <tr>
+    <td>
+      <h3>No domain matches this id.</h3>
+    </td>
+  </tr>
+  {% endif %}
+</table>
+<script src="/static/js/delete/domain.js"></script>
+{% endblock %}

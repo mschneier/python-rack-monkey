@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block content %}
+<div>
+  {% if racks %}
+    <ul class="table_list">
+    {% for rack in racks %}
+      <li>
+        <table class="rack_simple_table">
+          <thead class="table_head">
+            <tr>
+              <th colspan="42">
+                <a href="/view/racks/one/normal/{{ rack['id'] }}">
+                  Rack {{ rack["rack_name"] }} in {{ rack["room"] }}
+                </a>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {{ rack["table"]|safe }}
+          </tbody>
+          <tfoot>
+          </tfoot>
+        </table>
+      </li>
+    {% endfor %}
+    </ul>
+  {% else %}
+    <h3>No racks match this id.</h3>
+  {% endif %}
+</div>
+{% endblock %}

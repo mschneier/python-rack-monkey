@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block content %}
+<table class="config_table">
+  <thead class="table_head">
+    <tr>
+      <th>
+        <a href="/view/oses/all/?sort=os.name">OS</a>
+        <a href="/add/os/new/">
+          <img src="/static/pictures/edit/add_circle.png" alt="Add OS" title="Add OS" class="edit_pic">
+        </a>
+      </th>
+      <th><a href="/view/oses/all/?sort=org.name">Developer</a></th>
+      <th><a href="/view/oses/all/?sort=os.notes">Notes</a></th>
+    </tr>
+  </thead>
+  <tbody class="all_oss">
+    {% for os in oses %}
+      <tr>
+        <td>
+          <a href="/view/oses/single/{{ os['id'] }}">{{ os["name"] }}</a>
+          <a href="/delete/os/{{ os['id'] }}">
+            <img src="/static/pictures/edit/delete_circle.png" id="del_pic" class="edit_pic"
+              alt="Delete OS #{{ os['id'] }}" title="Delete OS #{{ os['id'] }}">
+          </a>
+          <a href="/update/os/{{ os['id'] }}">
+            <img src="/static/pictures/edit/edit_pencil.png" alt="Edit OS" title="Edit OS" class="edit_pic">
+          </a>
+        </td>
+        {% if os["maker"] %}
+          <td>{{ os["maker"] }}</td>
+        {% else %}
+          <td>-</td>
+        {% endif %}
+        {% if os["notes"] %}
+          <td>{{ os["notes"] }}</td>
+        {% else %}
+          <td>-</td>
+        {% endif %}
+      </tr>
+    {% endfor %}
+  </tbody>
+  <tfoot class="table_footer">
+    <tr>
+      <td colspan="42">Showing {{ oses_len }} of {{ oses_len }} oss.</td>
+    </tr>
+  </tfoot>
+</table>
+{% endblock %}

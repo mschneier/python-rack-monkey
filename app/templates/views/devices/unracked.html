@@ -1,0 +1,110 @@
+{% extends "views/devices/devices.html" %}
+{% block content %}
+{{ super() }}
+<table class="all_list">
+  <thead class="table_head">
+    <tr>
+      <th class="table_head device_column">
+        <a href="/view/devices/unracked/?sort=device.name">Device</a>
+        <a href="/add/device/new/">
+          <img src="/static/pictures/edit/add_circle.png" alt="Add Device" title="Add Device" class="edit_pic">
+        </a>
+        <input type="button" id="domain_button" value=".dom" class="domain_button">
+      </th>
+      <th class="table_head"><a href="/view/devices/unracked/?sort=building.name">Location Status</a></th>
+      <th class="table_head"><a href="/view/devices/unracked/?sort=role.name">Role</a></th>
+      <th class="table_head"><a href="/view/devices/unracked/?sort=hardware.name">Hardware</a></th>
+      <th class="table_head"><a href="/view/devices/unracked/?sort=os.name">OS</a></th>
+      <th class="table_head"><a href="/view/devices/unracked/?sort=device.serial_no">Serial</a></th>
+      <th class="table_head"><a href="/view/devices/unracked/?sort=device.asset_no">Asset</a></th>
+      <th class="table_head"><a href="/view/devices/unracked/?sort=customer.name">Customer</a></th>
+      <th class="table_head"><a href="/view/devices/unracked/?sort=device.purchased">Purchased</a></th>
+      <th class="table_head"><a href="/view/devices/unracked/?sort=device.notess">Notes</a></th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for device in devices %}
+      <tr>
+        {% if device["name"] in not_in_service %}
+          {% if device["domain"] %}
+            <td class="not_in_service">
+              <a href="/view/devices/one/{{ device['id'] }}">{{ device["name"] }}<span
+                class="domain">.{{ device["domain"] }}</span></a>
+              <a href="/delete/device/{{ device['id'] }}" title="Delete Device #{{ device['dev_id'] }}">
+                <img src="/static/pictures/edit/delete_circle.png" id="del_pic" alt="Delete Device #{{ device['id'] }}"
+                  class="edit_pic">
+              </a>
+              <a href="/update/device/{{ device['id'] }}">
+                <img src="/static/pictures/edit/edit_pencil.png" alt="Edit Device" title="Edit Device" class="edit_pic">
+              </a>
+            </td>
+          {% else %}
+            <td class="not_in_service">
+              <a href="/view/devices/one/{{ device['id'] }}">{{ device["name"] }}</a>
+              <a href="/delete/device/{{ device['id'] }}" title="Delete Device #{{ device['dev_id'] }}">
+                <img src="/static/pictures/edit/delete_circle.png" id="del_pic" alt="Delete Device #{{ device['id'] }}"
+                  class="edit_pic">
+              </a>
+              <a href="/update/device/{{ device['id'] }}">
+                <img src="/static/pictures/edit/edit_pencil.png" alt="Edit Device" title="Edit Device" class="edit_pic">
+              </a>
+            </td>
+          {% endif %}
+        {% else %}
+          {% if device["domain"] %}
+            <td>
+              <a href="/view/devices/one/{{ device['id'] }}">{{ device["name"] }}<span
+                class="domain">.{{ device["domain"] }}</span></a>
+              <a href="/delete/device/{{ device['id'] }}" title="Delete Device #{{ device['dev_id'] }}">
+                <img src="/static/pictures/edit/delete_circle.png" id="del_pic" alt="Delete Device #{{ device['id'] }}"
+                  class="edit_pic">
+              </a>
+              <a href="/update/device/{{ device['id'] }}">
+                <img src="/static/pictures/edit/edit_pencil.png" alt="Edit Device" title="Edit Device" class="edit_pic">
+              </a>
+            </td>
+          {% else %}
+            <td>
+              <a href="/view/devices/one/{{ device['id'] }}">{{ device["name"] }}</a>
+              <a href="/delete/device/{{ device['id'] }}" title="Delete Device #{{ device['dev_id'] }}">
+                <img src="/static/pictures/edit/delete_circle.png" id="del_pic" alt="Delete Device #{{ device['id'] }}"
+                  class="edit_pic">
+              </a>
+              <a href="/update/device/{{ device['id'] }}">
+                <img src="/static/pictures/edit/edit_pencil.png" alt="Edit Device" title="Edit Device" class="edit_pic">
+              </a>
+            </td>
+          {% endif %}
+        {% endif %}
+        <td>{{ device["building"] }}</td>
+        <td>{{ device["role"] }}</td>
+        {% if device["hardware"] %}
+          <td>{{ device["hardware"] }}</td>
+        {% else %}
+          <td>unknown</td>
+        {% endif %}
+        <td>{{ device["os"] }}</td>
+        {% if device["serial"] %}
+          <td>{{ device["serial"] }}</td>
+        {% else %}
+          <td>-</td>
+        {% endif %}
+        {% if device["asset"] %}
+          <td>{{ device["asset"] }}</td>
+        {% else %}
+          <td>-</td>
+        {% endif %}
+        <td>{{ device["customer"] }}</td>
+        <td>{{ device["purchased"] }}</td>
+        {% if device["notes"] %}
+          <td title="{{ device['notes'] }}">{{ device["notes"][:25] }}...</td>
+        {% else %}
+          <td>-</td>
+        {% endif %}
+      </tr>
+    {% endfor %}
+  </tbody>
+{% block footer %}
+  {{ super() }}
+{% endblock %}
+{% endblock %}

@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+{% block content %}
+<table class="config_table">
+  <thead class="table_head">
+    <tr>
+      <th colspan="42">
+        Rooms
+        <a href="/add/room/new/">
+          <img src="/static/pictures/edit/add_circle.png" alt="Add Room" title="Add Room"
+            class="edit_pic">
+        </a>
+        <a href="/view/rooms/all/">
+          <input type="button" value="View All">
+        </a>
+      </th>
+    </tr>
+  </thead>
+  {% if room %}
+  <tbody>
+    <tr>
+      <td>
+        <p class="key">Name</p>
+        {{ room["name"] }}
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <p class="key">room</p>
+        {% if room["building"] != "0" %}
+          <a href="/view/rooms/single/{{ room['build_id'] }}">{{ room["building"] }}</a>
+        {% else %}
+          -
+        {% endif %}
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <p class="key">Rows</p>
+        This room is not organized into rows.
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <p class="key">Racks</p>
+        {% if room["racks"] %}
+          {% for rack in room["racks"] %}
+            <a href="/view/racks/one/normal/{{ rack['id'] }}">{{ rack["name"] }}</a>,&nbsp;
+          {% endfor %}
+        {% endif %}
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <p class="key">Notes</p>
+        {% if room[3] %}
+          {{ room[3] }}
+        {% else %}
+          -
+        {% endif %}
+      </td>
+    </tr>
+  </tbody>
+  <tfoot class="table_footer">
+    <tr>
+      <td colspan="42">
+        <a href="/delete/room/{{ room['room_id'] }}">
+          <img src="/static/pictures/edit/delete_circle.png" id="del_pic" class="delete_pic"
+            alt="Delete Room #{{ room['room_id'] }}" title="Delete Room #{{ room['room_id'] }}">
+        </a>
+        Entry last updated by {{ room["update_user"] }} at {{ room["update_time"] }}.&nbsp;&nbsp;
+        <a href="/update/room/{{ room['room_id'] }}" title="Update Room">
+          <img src="/static/pictures/edit/edit_pencil.png" alt="Edit Room" title="Edit Room" class="edit_pic">
+        </a>
+      </td>
+    </tr>
+  </tfoot>
+  {% else %}
+  <tr>
+    <td>
+      <h3>No room matches this id.</h3>
+    </td>
+  </tr>
+  {% endif %}
+</table>
+{% endblock %}

@@ -1,0 +1,380 @@
+body {
+  font-family: sans-serif;
+  font-size: small;
+}
+
+#header {
+  background: #dc0200 url("/static/pictures/headerBackground.gif") repeat-x;
+  height: 55px;
+  margin-top: -1px;
+  width: 100%;
+}
+
+a {
+  color: #c33;
+  font-weight: bold;
+}
+
+li {
+  padding: 3px;
+}
+
+.error {
+  color: #d33;
+  font-style: oblique;
+  font-weight: bold;
+  margin-left: 5px;
+}
+
+.title {
+  color: gray;
+  margin-left: 2vw;
+}
+
+body a:hover {
+  color: red;
+  text-decoration: underline;
+}
+
+p {
+  margin-left: 8px;
+}
+
+thead {
+  background-color: #333333;
+  color: #fdfdfd;
+  font-weight: bold;
+  text-align: left;
+  text-decoration: underline;
+}
+
+.all_list tr:nth-child(even) {
+  background-color: #ffdddd;
+}
+
+td,
+th {
+  border: 1.5px solid #888888;
+  padding: 5px;
+}
+
+.table_footer {
+  color: #eee;
+  background-color: #333;
+  font-style: italic;
+  font-weight: bold;
+}
+
+.nav {
+  float: left;
+  font-size: 1.3em;
+  list-style: none;
+  margin-left: -10px;
+  /* margin-right: 3vw; */
+  padding: 20px;
+  text-align: center;
+  width: 100%;
+
+}
+
+.nav form {
+  margin-right: 8px;
+}
+
+.nav li {
+  display: inline;
+  float: left;
+  margin-top: -17px;
+}
+
+.nav a {
+  color: #f88;
+  display: inline-block;
+  float: left;
+  font-weight: normal;
+  padding: 8px 15px;
+  text-decoration: none;
+}
+
+.nav li a:hover {
+  background-color: #faa;
+  color: #c00;
+}
+
+.new_pass_button {
+  margin-left: 1vw;
+}
+
+h1,
+h2,
+h3,
+h5 {
+  font-weight: bold;
+  margin-left: 15px;
+}
+
+form {
+  margin-left: 25px;
+}
+
+.info {
+  margin-left: 13px;
+}
+
+#search {
+  margin-left: 10px;
+}
+
+#available {
+  margin-left: 20px;
+}
+
+.alert {
+  font-size: 1.3em;
+}
+
+.title {
+  text-align: center;
+}
+
+.table_head a {
+  color: #fcc;
+}
+
+.selection {
+  margin: 10px;
+}
+
+.filters {
+  display: inline;
+}
+
+.filters label {
+  margin-left: 10px;
+}
+
+#customer {
+  width: 110px;
+}
+
+#hardware_filter {
+  width: 190px;
+}
+
+#os_filter {
+  width: 150px;
+}
+
+#role_filter {
+  width: 150px;
+}
+
+.filter_button {
+  background: #eee;
+  border-bottom: solid 1px #000;
+  border-radius: 0;
+  border-right: solid 1px #000;
+}
+
+.filter_button:active {
+  border: solid 2px #000;
+}
+
+#Room_link {
+  width: 105px;
+}
+
+.not_in_service {
+  background-color: #dd7;
+}
+
+.selected_dev {
+  background-color: #ccf;
+}
+
+.search {
+  float: right;
+  margin: -13px 35px 0 10px;
+}
+
+.device_table,
+.rack_table {
+  margin-left: 50px;
+  width: 600px;
+}
+
+.device_table tbody,
+.rack_table tbody {
+  background-color: #ddd;
+}
+
+.device_table tfoot,
+.rack_table tfoot {
+  background-color: #333;
+  color: #ddd;
+  font-style: italic;
+}
+
+.device_table tr:nth-child(even),
+.rack_table tr:nth-child(even) {
+  background-color: #ddd;
+}
+
+.config_table input {
+  color: black;
+  float: right;
+}
+
+.config_table {
+  float: left;
+  margin-left: 20px;
+}
+
+.org_table input[type="checkbox"] {
+  float: left;
+}
+
+.config_table tbody {
+  background-color: #ddd;
+}
+
+.config_table a {
+  font-weight: bold;
+}
+
+.key {
+  font-weight: bold;
+}
+
+tfoot td {
+  text-align: center;
+}
+
+.rack_list_table {
+  padding: 5px;
+}
+
+.rack_list_table thead {
+  background-color: #333;
+  color: #ccc;
+}
+
+.row_num {
+  background-color: #333;
+  color: #ccc;
+  width: 30px;
+}
+
+.occupied {
+  background-color: #fcc;
+}
+
+.rack_simple_table {
+  float: left;
+  margin: 20px;
+}
+
+.table_list {
+  width: 100%;
+}
+
+.table_list li {
+  list-style: none;
+}
+
+.report_links {
+  padding: 15px;
+}
+
+.report_table {
+  margin-left: 10px;
+}
+
+.report_table thead {
+  background-color: #333;
+  color: #ccf;
+  text-decoration: none;
+}
+
+.report_table tr:nth-child(even) {
+  background-color: #fdd;
+}
+
+.add_device select {
+  width: auto;
+}
+
+.form-control select {
+  width: auto;
+}
+
+.available {
+  color: #080;
+  font-style: italic;
+  font-weight: bold;
+  margin-left: 5px;
+}
+
+.rack_loading {
+  color: black;
+  font-style: italic;
+  font-weight: bold;
+  margin-left: 5px;
+}
+
+.domain_button {
+  color: black;
+  float: right;
+}
+
+.device_column {
+  min-width: 175px;
+}
+
+.edit_pic {
+  float: right;
+  height: 15px;
+  margin-left: 5px;
+  width: 15px;
+}
+
+.delete_pic {
+  float: left;
+  height: 15px;
+  margin-right: 5px;
+  width: 15px;
+}
+
+.copy_device_button {
+  float: right;
+  margin-left: 7px;
+  margin-right: 7px;
+}
+
+.view_all_button {
+  float: right;
+  margin-left: 7px;
+  margin-right: 7px;
+}
+
+.dev_buttons,
+.rack_buttons {
+  background-color: #aaa;
+  color: black;
+  float: right;
+  margin-left: 7px;
+  margin-right: 7px;
+}
+
+.black_buttons {
+  color: black;
+}
+
+.org_checkbox.org_checkbox {
+  float: left;
+}
+
+.delete-button {
+  background-color: red;
+  border-color: red;
+}

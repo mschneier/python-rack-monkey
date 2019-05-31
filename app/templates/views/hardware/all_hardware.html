@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% block content %}
+<table class="config_table">
+  <thead class="table_head">
+    <tr>
+      <th style="width:175px;">
+        <a href="/view/hardware/all/?sort=hardware.name">Hardware</a>
+        <a href="/add/hardware/new/">
+          <img src="/static/pictures/edit/add_circle.png" alt="Add Hardware" title="Add Hardware" class="edit_pic">
+        </a>
+      </th>
+      <th><a href="/view/hardware/all/?sort=org.name">Manufacturer</a></th>
+      <th><a href="/view/hardware/all/?sort=hardware.size">Size</a></th>
+      <th><a href="/view/hardware/all/?sort=hardware.support_url">Support</a></th>
+      <th><a href="/view/hardware/all/?sort=hardware.spec_url">Specs</a></th>
+      <th><a href="/view/hardware/all/?sort=hardware.notes">Notes</a></th>
+    </tr>
+  </thead>
+  <tbody class="all_hardware">
+    {% for hardware in hardwares %}
+      <tr>
+        <td>
+          <a href="/view/hardware/single/{{ hardware['id'] }}">{{ hardware["name"] }}</a>
+          <a href="/delete/hardware/{{ hardware['id'] }}" title="Delete Hardware #{{ hardware['id'] }}">
+            <img src="/static/pictures/edit/delete_circle.png" id="del_pic" class="edit_pic"
+              alt="Delete Hardware #{{ hardware['id'] }}">
+          </a>
+          <a href="/update/hardware/{{ hardware['id'] }}">
+            <img src="/static/pictures/edit/edit_pencil.png" alt="Edit Hardware" title="Edit Hardware" class="edit_pic">
+          </a>
+        </td>
+        <td>{{ hardware["manufacturer"] }}</td>
+        <td>{{ hardware["size"] }}</td>
+        {% if hardware["support"] %}
+          <td><a href="{{ hardware['support'] }}">LINK</a></td>
+        {% else %}
+          <td>-</td>
+        {% endif %}
+        {% if hardware["spec"] %}
+          <td><a href="{{ hardware['spec'] }}">LINK</a></td>
+        {% else %}
+          <td>-</td>
+        {% endif %}
+        {% if hardware["notes"] %}
+          <td title="{{ hardware['notes'] }}">{{ hardware["notes_short"] }}...</td>
+        {% else %}
+          <td>-</td>
+        {% endif %}
+      </tr>
+    {% endfor %}
+  </tbody>
+  <tfoot class="table_footer">
+    <tr>
+      <td colspan="42">Showing {{ hardwares_len }} of {{ hardwares_len }} hardware models.</td>
+    </tr>
+  </tfoot>
+</table>
+{% endblock %}

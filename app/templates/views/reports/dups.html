@@ -1,0 +1,102 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="report_links">
+  <a href="/view/reports/main/">Reports Index</a> | <a href="/view/reports/device_count/">Device Counts</a> | <a href="/view/reports/dups/">Duplicates</a>
+</div>
+<h2>Duplicates Reports</h2>
+<p>
+  This page helps you track down duplicate OS licence keys, asset, and serial numbers.
+  To fix duplicates, edit devices by clicking on the pencil icon.
+  When you save your changes, you'll come back to this view so you can quickly fix all problem entries.
+  To see a full list of devices and their serial, asset, and OS licence info use the
+  <a href="/view/devices/asset/">device asset view</a>.
+</p>
+<h3>Serial Numbers</h3>
+{% if serials %}
+  <p>Devices having identical serial numbers.</p>
+  <table class="report_table">
+    <thead>
+      <tr>
+        <td>Serial</td>
+        <td>Hardware</td>
+        <td>Device</td>
+      </tr>
+    </thead>
+    <tbody>
+      {% for serial in serials %}
+        <tr>
+          <td>{{ serial[0] }}</td>
+          <td>{{ serial[1] }}</td>
+          <td>
+            <a href="/view/devices/one/{{ serial[3] }}">{{ serial[2] }}</a>
+            <a href="/update/device/{{ serial[3] }}">
+              <img src="/static/pictures/edit/edit_pencil.png" alt="Edit Device" title="Edit Device" class="edit_pic">
+            </a>
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% else %}
+  <p><i>All devices have unique asset numbers.</i></p>
+{% endif %}
+<h3>Asset numbers</h3>
+{% if assets %}
+  <p>Devices having identical asset numbers.</p>
+  <table class="report_table">
+    <thead>
+      <tr>
+        <td>Asset</td>
+        <td>Hardware</td>
+        <td>Device</td>
+      </tr>
+    </thead>
+    <tbody>
+      {% for asset in assets %}
+        <tr>
+          <td>{{ asset[0] }}</td>
+          <td>{{ asset[1] }}</td>
+          <td>
+            <a href="/view/devices/one/{{ asset[3] }}">{{ asset[2] }}</a>
+            <a href="/update/device/{{ asset[3] }}">
+              <img src="/static/pictures/edit/edit_pencil.png" alt="Edit Device" title="Edit Device" class="edit_pic">
+            </a>
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% else %}
+  <p><i>All devices have unique asset numbers.</i></p>
+{% endif %}
+<h3>OS Licence Keys</h3>
+{% if keys %}
+  <p>Devices having identical licence key numbers.</p>
+  <table class="report_table">
+    <thead>
+      <tr>
+        <td>Key</td>
+        <td>Hardware</td>
+        <td>Device</td>
+      </tr>
+    </thead>
+    <tbody>
+      {% for key in keys %}
+        <tr>
+          <td>{{ key[0] }}</td>
+          <td>{{ key[1] }}</td>
+          <td>
+            <a href="/view/devices/one/{{ key[3] }}">{{ key[2] }}</a>
+            <a href="/update/device/{{ key[3] }}">
+              <img src="/static/pictures/edit/edit_pencil.png" alt="Edit Device" title="Edit Device" class="edit_pic">
+            </a>
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% else %}
+  <p><i>All devices have unique os licence keys.</i></p>
+{% endif %}
+<br>
+{% endblock %}

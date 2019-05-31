@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="selection">
+  <label for="view">View Type</label>
+  <select class="" name="view" id="view">
+    <option value="default" id="default" selected>Default</option>
+    <option value="asset" id="asset">Asset</option>
+    <option value="extended" id="extended">Extended</option>
+    <option value="unracked" id="unracked">Unracked</option>
+  </select>&nbsp;&nbsp;
+  <input type="button" name="filter_toggle" value="Hide Filters" id="filter_toggle" class="filter_button">
+  <br>
+</div>
+<div class="filters" id="filters">
+  <label for="customer">Customer</label>
+  <select class="" name="customer" id="customer">
+    <option value="" selected>All</option>
+    {% for customer in customers %}
+      <option value="{{ customer['id'] }}">{{ customer["name"] }}</option>
+    {% endfor %}
+  </select>
+  <label for="role">Role</label>
+  <select class="" name="role_filter" id="role_filter">
+    <option value="" selected>All</option>
+    {% for role in roles %}
+      <option value="{{ role['id'] }}">{{ role["name"] }}</option>
+    {% endfor %}
+  </select>
+  <label for="hardware">Hardware</label>
+  <select class="" name="hardware" id="hardware_filter">
+    <option value="" selected>All</option>
+    {% for hardware in hardwares %}
+      <option value="{{ hardware['id'] }}">{{ hardware["name"] }}</option>
+    {% endfor %}
+  </select>
+  <label for="customer">OS</label>
+  <select class="" name="os" id="os_filter">
+    <option value="" selected>All</option>
+    {% for os in oses %}
+      <option value="{{ os['id'] }}">{{ os["name"] }}</option>
+    {% endfor %}
+  </select>
+  <input type="button" name="reset" value="Reset" id="reset_button" class="filter_button">
+  <br>
+</div>
+<br>
+{% endblock %}
+{% block footer %}
+    <tfoot class="table_footer">
+      <tr>
+        <td colspan="42">Showing {{ lenDevices }} of {{ lenAllDevices }} devices. Devices in yellow aren't in service.</td>
+      </tr>
+    </tfoot>
+  </table>
+  <script type="text/javascript" src="/static/js/devices/dev_views.js"></script>
+  <script type="text/javascript" src="/static/js/devices/filters.js"></script>
+  <script type="text/javascript" src="/static/js/devices/reset.js"></script>
+  <script type="text/javascript" src="/static/js/devices/show_hide_domain.js"></script>
+  <script type="text/javascript" src="/static/js/devices/sort_links.js"></script>
+{% endblock %}
