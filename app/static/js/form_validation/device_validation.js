@@ -116,6 +116,8 @@ $(function () {
             manufacturer: "Please select the device's manufacturer.",
             model: "Please select the device's model.",
             os: "Please select the device's OS.",
+            role: "Please select the device's role",
+            customer: "Please select the device's customer",
             service: "Please select the device's service level.",
             key: "This licence key is already in use.",
             asset: "This asset # is already in use.",

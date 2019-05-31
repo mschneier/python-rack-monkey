@@ -188,7 +188,7 @@ class AddDeviceForm(FlaskForm):
     dev_name = StringField(
         "dev_name",
         [Length(max=99), DataRequired("Please fill out the device name."),
-         dup_dev_name]
+        dup_dev_name]
     )
     domain = SelectField(
         "domain",
@@ -203,7 +203,7 @@ class AddDeviceForm(FlaskForm):
         "rack_name",
         coerce=int,
         choices=[
-            (rack[0], rack[1])
+            (rack["id"], rack["name"])
             for rack in sql_rack.get_all_racks()
         ],
         validators=[DataRequired("Please select the rack.")]
@@ -286,7 +286,7 @@ class UpdateDeviceForm(FlaskForm):
     dev_name = StringField(
         "dev_name",
         [Length(max=99), DataRequired("Please fill out the device name."),
-         dup_dev_name_update]
+        dup_dev_name_update]
     )
     domain = SelectField(
         "domain",
@@ -301,7 +301,7 @@ class UpdateDeviceForm(FlaskForm):
         "rack_name",
         coerce=int,
         choices=[
-            (rack[0], rack[1])
+            (rack["id"], rack["name"])
             for rack in sql_rack.get_all_racks()
         ],
         validators=[DataRequired("Please select the rack.")]

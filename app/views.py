@@ -271,7 +271,7 @@ def display_one_device(dev_id):
         return render_template(
             "error_pages/404.html",
             title="404",
-            msg="No app with this id",
+            msg="No device with this id",
         )
     return render_template(
         "views/devices/single_dev.html",
@@ -307,9 +307,17 @@ def display_all_racks():
 @app.route("/view/racks/one/normal/<int:rack_id>")
 def display_one_rack_normal(rack_id):
     """Show one rack normal view."""
-    rack = list(sql_rack.get_one_rack_normal_view(rack_id))
-    if rack:
-        rack[7] = clean(rack[7], tags=["a", "b", "br", "em", "i"], strip=True)
+    try:
+        rack = sql_rack.get_one_rack_normal_view(rack_id)
+        rack["notes"] = clean(
+            rack["notes"], tags=["a", "b", "br", "em", "i"], strip=True
+        )
+    except Exception:
+        return render_template(
+            "error_pages/404.html",
+            title="404",
+            msg="No rack with this id",
+        )
     return render_template(
         "views/racks/single_rack.html",
         rack=rack,
@@ -973,7 +981,8 @@ def add_device():
     devForm.customer.choices.insert(0, (0, "Select A Customer"))
     devForm.service_level.choices.insert(0, (0, "Select The Service Level"))
     racks = [
-        [rack[0], rack[1], rack[5]] for rack in sql_rack.get_all_racks()
+        [rack["id"], rack["name"], rack["size"]]
+        for rack in sql_rack.get_all_racks()
     ]
     hardwares = [[
         hardware["id"], hardware["name"],
@@ -1033,7 +1042,8 @@ def add_device_copy(device_id):
         for domain in sql_domain.get_all_domains_full()
     ]
     racks = [
-        [rack[0], rack[1], rack[5]] for rack in sql_rack.get_all_racks()
+        [rack["id"], rack["name"], rack["size"]]
+        for rack in sql_rack.get_all_racks()
     ]
     orgs = [[org["id"], org["name"]] for org in sql_device.get_orgs()]
     hardwares = [[
@@ -1188,12 +1198,12 @@ def add_copy_rack(rack_id):
             "/add/rack/copy.html",
             form=form,
             rooms=rooms,
-            sel_name=rack[0],
-            sel_room=rack[1],
-            sel_size=rack[2],
-            sel_dir=int(rack[3]),
-            sel_note=rack[4],
-            title=f"Add Copy of {rack[0]}"
+            sel_name=rack["name"],
+            sel_room=rack["room"],
+            sel_size=rack["size"],
+            sel_dir=int(rack["direction"]),
+            sel_note=rack["notes"],
+            title=f"Add Copy of {rack['name']}"
         )
     except TypeError:
         return render_template(
@@ -1447,7 +1457,8 @@ def update_device(device_id):
         for domain in sql_domain.get_all_domains_full()
     ]
     racks = [
-        [rack[0], rack[1], rack[5]] for rack in sql_rack.get_all_racks()
+        [rack["id"], rack["name"], rack["size"]]
+        for rack in sql_rack.get_all_racks()
     ]
     orgs = [[org["id"], org["name"]] for org in sql_device.get_orgs()]
     hardwares = [[
@@ -1565,12 +1576,12 @@ def update_rack(rack_id):
             "/update/rack.html",
             form=form,
             rooms=rooms,
-            sel_name=rack[0],
-            sel_room=rack[1],
-            sel_size=rack[2],
-            sel_dir=int(rack[3]),
-            sel_note=rack[4],
-            title=f"Update rack {rack[0]}"
+            sel_name=rack["name"],
+            sel_room=rack["room"],
+            sel_size=rack["size"],
+            sel_dir=int(rack["direction"]),
+            sel_note=rack["notes"],
+            title=f"Update rack {rack['name']}"
         )
     except TypeError:
         return render_template(
@@ -1929,7 +1940,7 @@ def delete_rack(rack_id):
     """Delete rack."""
     form = DeleteForm()
     try:
-        name = sql_rack.get_one_rack_normal_view(rack_id)[0]
+        name = sql_rack.get_one_rack_normal_view(rack_id)["name"]
     except IndexError:
         return render_template(
             "error_pages/404.html",

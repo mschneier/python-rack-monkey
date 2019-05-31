@@ -131,6 +131,8 @@ $(function () {
             rack_pos: "Please select the device's position.",
             manufacturer: "Please select the device's manufacturer.",
             model: "Please select the device's model.",
+            role: "Please select the device's role.",
+            customer: "Please select the device's customer.",
             os: "Please select the device's OS.",
             service: "Please select the device's service level.",
             key: "This licence key is already in use.",

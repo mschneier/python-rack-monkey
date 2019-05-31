@@ -23,27 +23,31 @@
     {% for rack in racks %}
       <tr>
         <td>
-          <a href="/view/racks/one/normal/{{ rack[0] }}">{{ rack[1] }}</a>
-          <a href="/update/rack/{{ rack[0] }}">
+          <a href="/view/racks/one/normal/{{ rack['id'] }}">{{ rack["name"] }}</a>
+          <a href="/delete/rack/{{ rack['id'] }}">
+            <img src="/static/pictures/edit/delete_circle.png" id="del_pic" class="edit_pic"
+              alt="Delete Rack #{{ rack['id'] }}" title="Delete Rack #{{ rack['id'] }}">
+          </a>
+          <a href="/update/rack/{{ rack['id'] }}">
             <img src="/static/pictures/edit/edit_pencil.png" alt="Edit Rack" title="Edit Rack" class="edit_pic">
           </a>
         </td>
-        <td>{{ rack[17] }} Devices</td>
-        {% if not rack[11] or rack[11] == "-" %}
+        <td>{{ rack["device_count"] }} Devices</td>
+        {% if not rack["row"] or rack["row"] == "-" %}
           <td>N/A</td>
         {% else %}
-          <td>{{ rack[11] }}</td>
+          <td>{{ rack["row"] }}</td>
         {% endif %}
-        <td>{{ rack[14] }} in {{ rack [15] }}</td>
-        <td>{{ rack[5] }}</td>
-        <td>{{ rack[18] }}</td>
-        {% if rack[7] %}
-          <td title="{{ rack[7] }}">{{ rack[7][:22] }}...</td>
+        <td>{{ rack["room_name"] }} in {{ rack ["building"] }}</td>
+        <td>{{ rack["size"] }}</td>
+        <td>{{ rack["free_space"] }}</td>
+        {% if rack["notes"] %}
+          <td title="{{ rack['notes'] }}">{{ rack["notes"][:22] }}...</td>
         {% else %}
           <td>-</td>
         {% endif %}
         <td>
-          <input type="checkbox" name="{{ rack[0] }}" value="{{ rack[0] }}">
+          <input type="checkbox" name="{{ rack['id'] }}" value="{{ rack['id'] }}">
         </td>
       </tr>
     {% endfor %}

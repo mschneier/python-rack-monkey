@@ -86,7 +86,6 @@
           <div class="form-group">
             <label for="manufacturer" class="control-label">Manufacturer *</label>
             <select name="org" id="manufacturer" class="form-control" required>
-              <option value="">Select Manufacturer</option>
               {% for org in orgs %}
                 {% if org[0] == sel_man %}
                   <option value="{{ org[0] }}" selected>{{ org[1] }}</option>
@@ -231,7 +230,6 @@
           <div class="form-group">
             <label for="customer" class="control-label">Customer *</label>
             <select name="customer" id="customer" class="form-control" style="width:auto;" required>
-              <option value="">Select a Customer</option>
               {% for customer in customers %}
                 {% if customer[0] == sel_cust %}
                   <option value="{{ customer[0] }}" selected>{{ customer[1] }}</option>
@@ -250,7 +248,6 @@
           <div class="form-group">
             <label for="service_level" class="control-label">Service Level *</label>
             <select name="service_level" id="service_level" class="form-control" required>
-              <option value="">Select a Service Level</option>
               {% for service in services %}
                 {% if service[0] == sel_service %}
                   <option value="{{ service[0] }}" selected>{{ service[1] }}</option>

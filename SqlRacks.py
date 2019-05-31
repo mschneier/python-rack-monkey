@@ -69,6 +69,13 @@ class SqlRack:
             """, (rack_id,)
         )
         rack = cur.fetchone()
+        rack = {
+            "name": rack[0],
+            "room": rack[1],
+            "size": rack[2],
+            "direction": rack[3],
+            "notes": rack[4]
+        }
         return rack
 
     @staticmethod
@@ -118,8 +125,10 @@ class SqlRack:
                 row.hidden_row AS row_hidden,
                 room.id AS room,
                 room.name AS room_name,
-                building.name AS building_name,
-                building.name_short AS building_name_short,
+                CASE WHEN LENGTH(building.name_short)>0
+                    THEN building.name_short
+                    ELSE building.name
+                END,
                 count(device.id) AS device_count,
                 rack.size - COALESCE(SUM(hardware.size), 0) AS free_space
             FROM row, room, building, rack
@@ -135,11 +144,13 @@ class SqlRack:
                 rack.meta_update_user, row.name, row.hidden_row, room.id,
                 room.name, building.name, building.name_short
             ORDER BY %s""" % (sort,))
-        racks = cur.fetchall()
-        racks = [list(rack) for rack in racks]
-        for rack in racks:
-            if "Wolfram" in rack[15]:
-                rack[15] = "WRI"
+        keys = [
+            "id", "name", "row_id", "row_pos", "hidden", "size", "direction",
+            "notes", "meta", "update_time", "update_user", "row",
+            "row_hidden", "room_id", "room_name", "building", "device_count",
+            "free_space"
+        ]
+        racks = [dict(zip(keys, rack)) for rack in cur.fetchall()]
         return racks
 
     @staticmethod
@@ -149,8 +160,11 @@ class SqlRack:
         cur = con.cursor()
         cur.execute(
             """SELECT rack.*, row.name, row.hidden_row, room.id, room.name,
-                building.name, building.name_short, count(device.id),
-                rack.size - COALESCE(SUM(hardware.size), 0)
+                CASE WHEN LENGTH(building.name_short)>0
+                    THEN building.name_short
+                    ELSE building.name
+                END,
+                count(device.id), rack.size - COALESCE(SUM(hardware.size), 0)
             FROM row, room, building, rack
             LEFT OUTER JOIN device ON (rack.id = device.rack)
             LEFT OUTER JOIN hardware ON (device.hardware = hardware.id)
@@ -167,12 +181,30 @@ class SqlRack:
             (rack_id,)
         )
         try:
-            rack = list(cur.fetchone())
-            if "Wolfram" in rack[15]:
-                rack[15] = "WRI"
+            rack = cur.fetchone()
+            rack = {
+                "id": rack[0],
+                "name": rack[1],
+                "row_id": rack[2],
+                "row_pos": rack[3],
+                "hidden": rack[4],
+                "size": rack[5],
+                "direction": rack[6],
+                "notes": rack[7],
+                "meta": rack[8],
+                "update_time": rack[9],
+                "update_user": rack[10],
+                "row_name": rack[11],
+                "hidden_row": rack[12],
+                "room_id": rack[13],
+                "room_name": rack[14],
+                "building": rack[15],
+                "device_count": rack[16],
+                "free_space": rack[17]
+            }
             # Format rack notes.
-            if rack[7]:
-                notes = rack[7]
+            if rack["notes"]:
+                notes = rack["notes"]
                 notes = notes.replace("\n", "<br>").replace("\r", "<br>")
                 links = re.findall(r"\[.*?\]", notes)
                 links = [link.replace("[", "").replace("]", "").split("|")
@@ -189,9 +221,9 @@ class SqlRack:
                             url = f"/view/racks/list/simple/?rack_list={id}&selected_dev={dev_id}"
                     link = "<a href='{}'>{}</a>".format(url, link_text)
                     notes = re.sub(r"\[.*?\]", link, notes, count=1)
-                rack[7] = notes
+                rack["notes"] = notes
             return rack
-        except TypeError:
+        except Exception:
             return ""
 
     @staticmethod
@@ -255,24 +287,34 @@ class SqlRack:
                 AND row.room = room.id
             ORDER BY device.rack_pos""", (rack_id,)
         )
-        info = cur.fetchall()
+        keys = [
+            "rack_size", "device", "device_size", "device_pos", "hardware",
+            "direction", "rack_name", "rack_id", "room", "device_id", "maker"
+        ]
+        info = [dict(zip(keys, i)) for i in cur.fetchall()]
         try:
-            rack_size = int(info[0][0])
-        except IndexError:
+            rack_size = int(info[0]["rack_size"])
+        except Exception:
             return ""
-        num_dir = "top" if int(info[0][5]) else "bottom"
-        rack_name = info[0][6]
-        rack_id = info[0][7]
-        room = info[0][8]
+        num_dir = "top" if int(info[0]["direction"]) else "bottom"
+        rack_name = info[0]["rack_name"]
+        rack_id = info[0]["rack_id"]
+        room = info[0]["room"]
         # Position of all devices in rack.
         if num_dir == "top":
-            rack_poses = [int(row[3]) for row in info]
+            rack_poses = [int(row["device_pos"]) for row in info]
         else:
             # If starting from bottom, add size-1 to get last pos used by dev.
-            rack_poses = [int(row[3]) + int(row[2]) - 1 for row in info]
+            rack_poses = [
+                int(row["device_pos"]) + int(row["device_size"]) - 1
+                for row in info
+            ]
         # Build dict of positions that are occupied.
-        devices = [(row[1], row[2], row[3], row[4], row[9], row[10])
-                   for row in info]
+        devices = [
+            (row["device"], row["device_size"], row["device_pos"],
+            row["hardware"], row["device_id"], row["maker"])
+            for row in info
+        ]
         dev_dict = {}
         for device in devices:
             name = cls.sanitize(device[0])
@@ -364,25 +406,34 @@ class SqlRack:
                 AND device.role = role.id
             ORDER BY device.rack_pos""", (rack_id,)
         )
-        info = cur.fetchall()
+        keys = [
+            "rack_size", "device", "device_size", "device_pos", "hardware",
+            "direction", "rack_name", "rack_id", "room", "device_id",
+            "customer", "role", "serial", "asset"
+        ]
+        info = [dict(zip(keys, i)) for i in cur.fetchall()]
         try:
-            rack_size = int(info[0][0])
+            rack_size = int(info[0]["rack_size"])
         except IndexError:
             return ""
-        num_dir = "top" if int(info[0][5]) else "bottom"
-        rack_name = info[0][6]
-        rack_id = info[0][7]
-        room = info[0][8]
+        num_dir = "top" if int(info[0]["direction"]) else "bottom"
+        rack_name = info[0]["rack_name"]
+        rack_id = info[0]["rack_id"]
+        room = info[0]["room"]
         # Position of all devices in rack.
         if num_dir == "top":
-            rack_poses = [int(row[3]) for row in info]
+            rack_poses = [int(row["device_pos"]) for row in info]
         else:
             # If starting from bottom, add size-1 to get last pos used by dev.
-            rack_poses = [int(row[3]) + int(row[2]) - 1 for row in info]
+            rack_poses = [
+                int(row["device_pos"]) + int(row["device_size"]) - 1
+                for row in info
+            ]
         # Build dict of positions that are occupied.
         devices = [(
-            row[1], row[2], row[3], row[4], row[9],
-            row[10], row[11], row[12], row[13]
+            row["device"], row["device_size"], row["device_pos"],
+            row["hardware"], row["device_id"], row["customer"], row["role"],
+            row["serial"], row["asset"]
         ) for row in info]
         dev_dict = {}
         for device in devices:

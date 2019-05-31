@@ -9,7 +9,7 @@
           <a href="/add/rack/new/">
             <img src="/static/pictures/edit/add_circle.png" alt="Add Rack" title="Add Rack" class="edit_pic">
           </a>
-          <a href="/add/rack/copy/{{ rack[0]|e }}" style="color:black;" class="rack_buttons black_buttons" title="Copy Rack {{ rack[1]|e }}">
+          <a href="/add/rack/copy/{{ rack['id'] }}" style="color:black;" class="rack_buttons black_buttons" title="Copy Rack {{ rack[1]|e }}">
             <input type="button" value="Copy Rack" name="copy_rack">
           </a>
           <a href="/view/racks/" style="color:black;" class="rack_buttons black_buttons" title="View All Racks"
@@ -23,17 +23,17 @@
       <tr>
         <td>
           <p class="key">Name</p>
-          {{ rack[1]|e }}
+          {{ rack["name"] }}
         </td>
       </tr>
       <tr>
         <td>
           <p class="key">Layout</p>
-          {% if rack[17] %}
-            View the {{ rack[17] }} in
-            <a href="/view/racks/list/simple/?rack_list={{ rack[0]|e }}">summary layout</a>
+          {% if rack["device_count"] %}
+            View the {{ rack["device_count"] }} devices in
+            <a href="/view/racks/list/simple/?rack_list={{ rack['id'] }}">summary layout</a>.
             or
-            <a href="/view/racks/list/extended/{{ rack[0]|e }}">detailed layout.</a>
+            <a href="/view/racks/list/extended/{{ rack['id'] }}">detailed layout</a>.
           {% else %}
             No devices in this rack.
           {% endif %}
@@ -42,29 +42,29 @@
       <tr>
         <td>
           <p class="key">Row [position]</p>
-          {% if not rack[11] or rack[11] == "-" %}
+          {% if not rack["row"] or rack["row"] == "-" %}
             N/A
           {% else %}
-            {{ rack[11] }} [{{ rack[4] }}]
+            {{ rack["row"] }} [{{ rack["row_pos"] }}]
           {% endif %}
         </td>
       </tr>
       <tr>
         <td>
           <p class="key">Room</p>
-          {{ rack[14] }} in {{ rack[15] }}
+          {{ rack["room_name"] }} in {{ rack["building"] }}
         </td>
       </tr>
       <tr>
         <td>
           <p class="key">Size (Free Space)</p>
-          {{ rack[5] }}U ({{ rack[18] }}U)
+          {{ rack["szie"] }}U ({{ rack["free_space"] }}U)
         </td>
       </tr>
       <tr>
         <td>
           <p class="key">Numbered From</p>
-          {% if rack[6] %}
+          {% if rack["direction"] %}
             Top
           {% else %}
             Bottom
@@ -74,19 +74,19 @@
       <tr>
         <td>
           <p class="key">Notes</p>
-          <p id="notes">{{ rack[7] }}</p>
+          <p id="notes">{{ rack["notes"] }}</p>
         </td>
       </tr>
     </tbody>
     <tfoot>
       <tr>
         <td>
-          <a href="/delete/rack/{{ rack[0] }}">
+          <a href="/delete/rack/{{ rack['id'] }}">
             <img src="/static/pictures/edit/delete_circle.png" id="del_pic" class="delete_pic"
-              alt="Delete Rack #{{ rack[0] }}" title="Delete Rack #{{ rack[0] }}">
+              alt="Delete Rack #{{ rack['id'] }}" title="Delete Rack #{{ rack['id'] }}">
           </a>
-          Entry last updated by {{ rack[10] }} at {{ rack[9] }}.&nbsp;&nbsp;
-          <a href="/update/rack/{{ rack[0] }}" title="Update Rack">
+          Entry last updated by {{ rack["update_user"] }} at {{ rack["update_time"] }}.&nbsp;&nbsp;
+          <a href="/update/rack/{{ rack['id'] }}" title="Update Rack">
             <img src="/static/pictures/edit/edit_pencil.png" alt="Edit Rack" title="Edit Rack" class="edit_pic">
           </a>
         </td>

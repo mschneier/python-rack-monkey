@@ -121,7 +121,7 @@ CREATE TABLE building (
 ALTER TABLE public.building OWNER TO postgres;
 
 --
--- Name: customer; Type: TABLE; Schema: public; Owner: mschneier; Tablespace: 
+-- Name: customer; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
 --
 
 CREATE TABLE customer (
@@ -130,7 +130,7 @@ CREATE TABLE customer (
 );
 
 
-ALTER TABLE public.customer OWNER TO mschneier;
+ALTER TABLE public.customer OWNER TO postgres;
 
 --
 -- Name: device_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
@@ -1072,8 +1072,6 @@ GRANT ALL ON SCHEMA public TO PUBLIC;
 REVOKE ALL ON SEQUENCE app_id_seq FROM PUBLIC;
 REVOKE ALL ON SEQUENCE app_id_seq FROM postgres;
 GRANT ALL ON SEQUENCE app_id_seq TO postgres;
-GRANT SELECT,USAGE ON SEQUENCE app_id_seq TO mschneier;
-GRANT SELECT,USAGE ON SEQUENCE app_id_seq TO apache;
 GRANT USAGE ON SEQUENCE app_id_seq TO insert_entries;
 
 
@@ -1084,8 +1082,6 @@ GRANT USAGE ON SEQUENCE app_id_seq TO insert_entries;
 REVOKE ALL ON TABLE app FROM PUBLIC;
 REVOKE ALL ON TABLE app FROM postgres;
 GRANT ALL ON TABLE app TO postgres;
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE app TO mschneier;
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE app TO apache;
 GRANT SELECT ON TABLE app TO query_tables;
 GRANT SELECT,UPDATE ON TABLE app TO update_tables;
 GRANT SELECT,DELETE ON TABLE app TO delete_entries;
@@ -1100,8 +1096,6 @@ GRANT SELECT ON TABLE app TO logging;
 REVOKE ALL ON SEQUENCE app_relation_id_seq FROM PUBLIC;
 REVOKE ALL ON SEQUENCE app_relation_id_seq FROM postgres;
 GRANT ALL ON SEQUENCE app_relation_id_seq TO postgres;
-GRANT SELECT,USAGE ON SEQUENCE app_relation_id_seq TO mschneier;
-GRANT SELECT,USAGE ON SEQUENCE app_relation_id_seq TO apache;
 GRANT USAGE ON SEQUENCE app_relation_id_seq TO insert_entries;
 
 
@@ -1112,8 +1106,6 @@ GRANT USAGE ON SEQUENCE app_relation_id_seq TO insert_entries;
 REVOKE ALL ON TABLE app_relation FROM PUBLIC;
 REVOKE ALL ON TABLE app_relation FROM postgres;
 GRANT ALL ON TABLE app_relation TO postgres;
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE app_relation TO mschneier;
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE app_relation TO apache;
 GRANT SELECT ON TABLE app_relation TO query_tables;
 GRANT SELECT,UPDATE ON TABLE app_relation TO update_tables;
 GRANT SELECT,DELETE ON TABLE app_relation TO delete_entries;
@@ -1128,8 +1120,6 @@ GRANT SELECT ON TABLE app_relation TO logging;
 REVOKE ALL ON SEQUENCE building_id_seq FROM PUBLIC;
 REVOKE ALL ON SEQUENCE building_id_seq FROM postgres;
 GRANT ALL ON SEQUENCE building_id_seq TO postgres;
-GRANT SELECT,USAGE ON SEQUENCE building_id_seq TO mschneier;
-GRANT SELECT,USAGE ON SEQUENCE building_id_seq TO apache;
 GRANT USAGE ON SEQUENCE building_id_seq TO insert_entries;
 
 
@@ -1140,8 +1130,6 @@ GRANT USAGE ON SEQUENCE building_id_seq TO insert_entries;
 REVOKE ALL ON TABLE building FROM PUBLIC;
 REVOKE ALL ON TABLE building FROM postgres;
 GRANT ALL ON TABLE building TO postgres;
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE building TO mschneier;
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE building TO apache;
 GRANT SELECT ON TABLE building TO search_devices;
 GRANT SELECT ON TABLE building TO query_tables;
 GRANT SELECT,UPDATE ON TABLE building TO update_tables;
@@ -1151,14 +1139,11 @@ GRANT SELECT ON TABLE building TO logging;
 
 
 --
--- Name: customer; Type: ACL; Schema: public; Owner: mschneier
+-- Name: customer; Type: ACL; Schema: public; Owner: postgres
 --
 
 REVOKE ALL ON TABLE customer FROM PUBLIC;
-REVOKE ALL ON TABLE customer FROM mschneier;
-GRANT ALL ON TABLE customer TO mschneier;
 GRANT SELECT ON TABLE customer TO search_devices;
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE customer TO apache;
 GRANT SELECT ON TABLE customer TO query_tables;
 GRANT SELECT,UPDATE ON TABLE customer TO update_tables;
 GRANT SELECT,DELETE ON TABLE customer TO delete_entries;
@@ -1173,8 +1158,6 @@ GRANT SELECT ON TABLE customer TO logging;
 REVOKE ALL ON SEQUENCE device_id_seq FROM PUBLIC;
 REVOKE ALL ON SEQUENCE device_id_seq FROM postgres;
 GRANT ALL ON SEQUENCE device_id_seq TO postgres;
-GRANT SELECT,USAGE ON SEQUENCE device_id_seq TO mschneier;
-GRANT SELECT,USAGE ON SEQUENCE device_id_seq TO apache;
 GRANT USAGE ON SEQUENCE device_id_seq TO insert_entries;
 
 
@@ -1185,8 +1168,6 @@ GRANT USAGE ON SEQUENCE device_id_seq TO insert_entries;
 REVOKE ALL ON TABLE device FROM PUBLIC;
 REVOKE ALL ON TABLE device FROM postgres;
 GRANT ALL ON TABLE device TO postgres;
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE device TO mschneier;
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE device TO apache;
 GRANT SELECT ON TABLE device TO search_devices;
 GRANT SELECT ON TABLE device TO query_tables;
 GRANT SELECT,UPDATE ON TABLE device TO update_tables;
@@ -1258,8 +1239,6 @@ GRANT UPDATE(meta_update_user) ON TABLE device TO os_update;
 REVOKE ALL ON SEQUENCE device_app_id_seq FROM PUBLIC;
 REVOKE ALL ON SEQUENCE device_app_id_seq FROM postgres;
 GRANT ALL ON SEQUENCE device_app_id_seq TO postgres;
-GRANT SELECT,USAGE ON SEQUENCE device_app_id_seq TO mschneier;
-GRANT SELECT,USAGE ON SEQUENCE device_app_id_seq TO apache;
 GRANT USAGE ON SEQUENCE device_app_id_seq TO insert_entries;
 
 
@@ -1270,8 +1249,6 @@ GRANT USAGE ON SEQUENCE device_app_id_seq TO insert_entries;
 REVOKE ALL ON TABLE device_app FROM PUBLIC;
 REVOKE ALL ON TABLE device_app FROM postgres;
 GRANT ALL ON TABLE device_app TO postgres;
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE device_app TO mschneier;
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE device_app TO apache;
 GRANT SELECT ON TABLE device_app TO query_tables;
 GRANT SELECT,UPDATE ON TABLE device_app TO update_tables;
 GRANT SELECT,DELETE ON TABLE device_app TO delete_entries;
@@ -1286,8 +1263,6 @@ GRANT SELECT ON TABLE device_app TO logging;
 REVOKE ALL ON SEQUENCE domain_id_seq FROM PUBLIC;
 REVOKE ALL ON SEQUENCE domain_id_seq FROM postgres;
 GRANT ALL ON SEQUENCE domain_id_seq TO postgres;
-GRANT SELECT,USAGE ON SEQUENCE domain_id_seq TO mschneier;
-GRANT SELECT,USAGE ON SEQUENCE domain_id_seq TO apache;
 GRANT USAGE ON SEQUENCE domain_id_seq TO insert_entries;
 
 
@@ -1298,8 +1273,6 @@ GRANT USAGE ON SEQUENCE domain_id_seq TO insert_entries;
 REVOKE ALL ON TABLE domain FROM PUBLIC;
 REVOKE ALL ON TABLE domain FROM postgres;
 GRANT ALL ON TABLE domain TO postgres;
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE domain TO mschneier;
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE domain TO apache;
 GRANT SELECT ON TABLE domain TO search_devices;
 GRANT SELECT ON TABLE domain TO query_tables;
 GRANT SELECT,UPDATE ON TABLE domain TO update_tables;
@@ -1315,8 +1288,6 @@ GRANT SELECT ON TABLE domain TO logging;
 REVOKE ALL ON SEQUENCE hardware_id_seq FROM PUBLIC;
 REVOKE ALL ON SEQUENCE hardware_id_seq FROM postgres;
 GRANT ALL ON SEQUENCE hardware_id_seq TO postgres;
-GRANT SELECT,USAGE ON SEQUENCE hardware_id_seq TO mschneier;
-GRANT SELECT,USAGE ON SEQUENCE hardware_id_seq TO apache;
 GRANT SELECT,UPDATE ON SEQUENCE hardware_id_seq TO insert_entries;
 
 
@@ -1327,8 +1298,6 @@ GRANT SELECT,UPDATE ON SEQUENCE hardware_id_seq TO insert_entries;
 REVOKE ALL ON TABLE hardware FROM PUBLIC;
 REVOKE ALL ON TABLE hardware FROM postgres;
 GRANT ALL ON TABLE hardware TO postgres;
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE hardware TO mschneier;
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE hardware TO apache;
 GRANT SELECT ON TABLE hardware TO search_devices;
 GRANT SELECT ON TABLE hardware TO query_tables;
 GRANT SELECT,UPDATE ON TABLE hardware TO update_tables;
@@ -1344,8 +1313,6 @@ GRANT SELECT ON TABLE hardware TO logging;
 REVOKE ALL ON SEQUENCE logging_id_seq FROM PUBLIC;
 REVOKE ALL ON SEQUENCE logging_id_seq FROM postgres;
 GRANT ALL ON SEQUENCE logging_id_seq TO postgres;
-GRANT SELECT,USAGE ON SEQUENCE logging_id_seq TO mschneier;
-GRANT SELECT,USAGE ON SEQUENCE logging_id_seq TO apache;
 GRANT USAGE ON SEQUENCE logging_id_seq TO logging;
 
 
@@ -1356,8 +1323,6 @@ GRANT USAGE ON SEQUENCE logging_id_seq TO logging;
 REVOKE ALL ON TABLE logging FROM PUBLIC;
 REVOKE ALL ON TABLE logging FROM postgres;
 GRANT ALL ON TABLE logging TO postgres;
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE logging TO mschneier;
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE logging TO apache;
 GRANT SELECT,INSERT ON TABLE logging TO logging;
 
 
@@ -1368,8 +1333,6 @@ GRANT SELECT,INSERT ON TABLE logging TO logging;
 REVOKE ALL ON SEQUENCE org_id_seq FROM PUBLIC;
 REVOKE ALL ON SEQUENCE org_id_seq FROM postgres;
 GRANT ALL ON SEQUENCE org_id_seq TO postgres;
-GRANT SELECT,USAGE ON SEQUENCE org_id_seq TO mschneier;
-GRANT SELECT,USAGE ON SEQUENCE org_id_seq TO apache;
 GRANT USAGE ON SEQUENCE org_id_seq TO insert_entries;
 
 
@@ -1380,8 +1343,6 @@ GRANT USAGE ON SEQUENCE org_id_seq TO insert_entries;
 REVOKE ALL ON TABLE org FROM PUBLIC;
 REVOKE ALL ON TABLE org FROM postgres;
 GRANT ALL ON TABLE org TO postgres;
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE org TO mschneier;
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE org TO apache;
 GRANT SELECT ON TABLE org TO search_devices;
 GRANT SELECT ON TABLE org TO query_tables;
 GRANT SELECT,UPDATE ON TABLE org TO update_tables;
@@ -1397,8 +1358,6 @@ GRANT SELECT ON TABLE org TO logging;
 REVOKE ALL ON SEQUENCE os_id_seq FROM PUBLIC;
 REVOKE ALL ON SEQUENCE os_id_seq FROM postgres;
 GRANT ALL ON SEQUENCE os_id_seq TO postgres;
-GRANT SELECT,USAGE ON SEQUENCE os_id_seq TO mschneier;
-GRANT SELECT,USAGE ON SEQUENCE os_id_seq TO apache;
 GRANT USAGE ON SEQUENCE os_id_seq TO insert_entries;
 
 
@@ -1409,8 +1368,6 @@ GRANT USAGE ON SEQUENCE os_id_seq TO insert_entries;
 REVOKE ALL ON TABLE os FROM PUBLIC;
 REVOKE ALL ON TABLE os FROM postgres;
 GRANT ALL ON TABLE os TO postgres;
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE os TO mschneier;
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE os TO apache;
 GRANT SELECT ON TABLE os TO search_devices;
 GRANT SELECT ON TABLE os TO query_tables;
 GRANT SELECT,UPDATE ON TABLE os TO update_tables;
@@ -1444,8 +1401,6 @@ GRANT SELECT(name) ON TABLE os TO os_update;
 REVOKE ALL ON SEQUENCE rack_id_seq FROM PUBLIC;
 REVOKE ALL ON SEQUENCE rack_id_seq FROM postgres;
 GRANT ALL ON SEQUENCE rack_id_seq TO postgres;
-GRANT SELECT,USAGE ON SEQUENCE rack_id_seq TO mschneier;
-GRANT SELECT,USAGE ON SEQUENCE rack_id_seq TO apache;
 GRANT USAGE ON SEQUENCE rack_id_seq TO insert_entries;
 
 
@@ -1456,8 +1411,6 @@ GRANT USAGE ON SEQUENCE rack_id_seq TO insert_entries;
 REVOKE ALL ON TABLE rack FROM PUBLIC;
 REVOKE ALL ON TABLE rack FROM postgres;
 GRANT ALL ON TABLE rack TO postgres;
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE rack TO mschneier;
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE rack TO apache;
 GRANT SELECT ON TABLE rack TO search_devices;
 GRANT SELECT ON TABLE rack TO query_tables;
 GRANT SELECT,UPDATE ON TABLE rack TO update_tables;
@@ -1473,8 +1426,6 @@ GRANT SELECT ON TABLE rack TO logging;
 REVOKE ALL ON SEQUENCE rm_meta_id_seq FROM PUBLIC;
 REVOKE ALL ON SEQUENCE rm_meta_id_seq FROM postgres;
 GRANT ALL ON SEQUENCE rm_meta_id_seq TO postgres;
-GRANT SELECT,USAGE ON SEQUENCE rm_meta_id_seq TO mschneier;
-GRANT SELECT,USAGE ON SEQUENCE rm_meta_id_seq TO apache;
 
 
 --
@@ -1484,8 +1435,6 @@ GRANT SELECT,USAGE ON SEQUENCE rm_meta_id_seq TO apache;
 REVOKE ALL ON TABLE rm_meta FROM PUBLIC;
 REVOKE ALL ON TABLE rm_meta FROM postgres;
 GRANT ALL ON TABLE rm_meta TO postgres;
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE rm_meta TO mschneier;
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE rm_meta TO apache;
 
 
 --
@@ -1495,8 +1444,6 @@ GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE rm_meta TO apache;
 REVOKE ALL ON SEQUENCE role_id_seq FROM PUBLIC;
 REVOKE ALL ON SEQUENCE role_id_seq FROM postgres;
 GRANT ALL ON SEQUENCE role_id_seq TO postgres;
-GRANT SELECT,USAGE ON SEQUENCE role_id_seq TO mschneier;
-GRANT SELECT,USAGE ON SEQUENCE role_id_seq TO apache;
 GRANT SELECT,UPDATE ON SEQUENCE role_id_seq TO insert_entries;
 
 
@@ -1507,8 +1454,6 @@ GRANT SELECT,UPDATE ON SEQUENCE role_id_seq TO insert_entries;
 REVOKE ALL ON TABLE role FROM PUBLIC;
 REVOKE ALL ON TABLE role FROM postgres;
 GRANT ALL ON TABLE role TO postgres;
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE role TO mschneier;
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE role TO apache;
 GRANT SELECT ON TABLE role TO search_devices;
 GRANT SELECT ON TABLE role TO query_tables;
 GRANT SELECT,UPDATE ON TABLE role TO update_tables;
@@ -1524,8 +1469,6 @@ GRANT SELECT ON TABLE role TO logging;
 REVOKE ALL ON SEQUENCE room_id_seq FROM PUBLIC;
 REVOKE ALL ON SEQUENCE room_id_seq FROM postgres;
 GRANT ALL ON SEQUENCE room_id_seq TO postgres;
-GRANT SELECT,USAGE ON SEQUENCE room_id_seq TO mschneier;
-GRANT SELECT,USAGE ON SEQUENCE room_id_seq TO apache;
 GRANT USAGE ON SEQUENCE room_id_seq TO insert_entries;
 
 
@@ -1536,8 +1479,6 @@ GRANT USAGE ON SEQUENCE room_id_seq TO insert_entries;
 REVOKE ALL ON TABLE room FROM PUBLIC;
 REVOKE ALL ON TABLE room FROM postgres;
 GRANT ALL ON TABLE room TO postgres;
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE room TO mschneier;
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE room TO apache;
 GRANT SELECT ON TABLE room TO search_devices;
 GRANT SELECT ON TABLE room TO query_tables;
 GRANT SELECT,UPDATE ON TABLE room TO update_tables;
@@ -1553,8 +1494,6 @@ GRANT SELECT ON TABLE room TO logging;
 REVOKE ALL ON SEQUENCE row_id_seq FROM PUBLIC;
 REVOKE ALL ON SEQUENCE row_id_seq FROM postgres;
 GRANT ALL ON SEQUENCE row_id_seq TO postgres;
-GRANT SELECT,USAGE ON SEQUENCE row_id_seq TO mschneier;
-GRANT SELECT,USAGE ON SEQUENCE row_id_seq TO apache;
 GRANT USAGE ON SEQUENCE row_id_seq TO insert_entries;
 
 
@@ -1565,8 +1504,6 @@ GRANT USAGE ON SEQUENCE row_id_seq TO insert_entries;
 REVOKE ALL ON TABLE "row" FROM PUBLIC;
 REVOKE ALL ON TABLE "row" FROM postgres;
 GRANT ALL ON TABLE "row" TO postgres;
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE "row" TO mschneier;
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE "row" TO apache;
 GRANT SELECT ON TABLE "row" TO search_devices;
 GRANT SELECT ON TABLE "row" TO query_tables;
 GRANT SELECT,UPDATE ON TABLE "row" TO update_tables;
@@ -1582,8 +1519,6 @@ GRANT SELECT ON TABLE "row" TO logging;
 REVOKE ALL ON SEQUENCE service_id_seq FROM PUBLIC;
 REVOKE ALL ON SEQUENCE service_id_seq FROM postgres;
 GRANT ALL ON SEQUENCE service_id_seq TO postgres;
-GRANT SELECT,USAGE ON SEQUENCE service_id_seq TO mschneier;
-GRANT SELECT,USAGE ON SEQUENCE service_id_seq TO apache;
 GRANT USAGE ON SEQUENCE service_id_seq TO insert_entries;
 
 
@@ -1594,8 +1529,6 @@ GRANT USAGE ON SEQUENCE service_id_seq TO insert_entries;
 REVOKE ALL ON TABLE service FROM PUBLIC;
 REVOKE ALL ON TABLE service FROM postgres;
 GRANT ALL ON TABLE service TO postgres;
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE service TO mschneier;
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE service TO apache;
 GRANT SELECT ON TABLE service TO search_devices;
 GRANT SELECT ON TABLE service TO query_tables;
 GRANT SELECT,UPDATE ON TABLE service TO update_tables;
