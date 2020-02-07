@@ -563,7 +563,3 @@ class ServiceForm(FlaskForm):
     )
     description = TextAreaField("description", [Length(max=500)])
     notes = TextAreaField("notes", [Length(max=500)])
-
-
-class DeleteForm(FlaskForm):
-    """Form to delete things."""
