@@ -544,7 +544,7 @@ class OrgForm(FlaskForm):
 
 
 class RoleForm(FlaskForm):
-    """Form to add domain."""
+    """Form to add role."""
 
     name = StringField(
         "name",
@@ -555,7 +555,7 @@ class RoleForm(FlaskForm):
 
 
 class ServiceForm(FlaskForm):
-    """Form to add domain."""
+    """Form to add service."""
 
     name = StringField(
         "name",
@@ -563,3 +563,8 @@ class ServiceForm(FlaskForm):
     )
     description = TextAreaField("description", [Length(max=500)])
     notes = TextAreaField("notes", [Length(max=500)])
+
+	
+class DeleteForm(FlaskForm):
+     """Form to delete devices."""     
+	
